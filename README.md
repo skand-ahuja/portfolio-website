@@ -1,98 +1,182 @@
 # Personal Portfolio Website
 
-A modern, full-stack personal portfolio built to showcase experience as a
-Data Analyst / Automation Engineer / Full-Stack Developer. Designed with
-a minimalist glassmorphism aesthetic, dark/light mode, and dynamic,
-database-driven content (no hardcoded data that requires a redeploy to update).
+A modern full-stack personal portfolio website built to showcase my work,
+skills, experience, projects, and professional journey.
 
-## Tech Stack
+The portfolio combines a modern responsive interface with a secure backend
+and database-driven project management.
 
-- **Frontend:** React.js (Vite) + Tailwind CSS v4 + Framer Motion + Font Awesome
-- **Backend:** Node.js + Express.js
-- **Database:** MySQL (local: XAMPP, production: cloud MySQL provider)
-- **Email:** Resend.com (contact form notifications + auto-reply)
+## ✨ Highlights
 
-## Project Structure
+- Responsive design for mobile, tablet, and desktop
+- Dark and light theme support
+- Modern glassmorphism-inspired UI
+- Interactive project showcase
+- Database-driven project management
+- Secure admin dashboard
+- Contact form with email notifications
+- Automatic contact acknowledgement emails
+- Accessible and keyboard-friendly interface
+- SEO-ready structure
+- Production-oriented security practices
+
+## 🛠️ Technology
+
+### Frontend
+
+- React.js
+- Vite
+- Tailwind CSS
+- JavaScript
+- Font Awesome
+
+### Backend
+
+- Node.js
+- Express.js
+- REST API
+
+### Database
+
+- PostgreSQL
+
+### Authentication
+
+- JWT
+- HttpOnly cookies
+- bcrypt password hashing
+
+### Email
+
+- Gmail SMTP
+
+## 📁 Project Structure
 
 ```
 portfolio-website/
-├── frontend/          React app (Vite + Tailwind)
-│   └── src/
-│       ├── components/   Reusable UI pieces (GlassCard, ThemeToggle, etc.)
-│       ├── sections/     Page sections (Hero, About, Skills, Experience...)
-│       ├── hooks/        Custom React hooks (useTheme, etc.)
-│       ├── data/         Editable content (skills.js, experience.js)
-│       └── styles/       (reserved for future style splitting)
 │
-├── backend/           Express API
+├── frontend/
+│   ├── public/
 │   └── src/
-│       ├── routes/       API endpoint definitions
-│       ├── controllers/  Request handling logic
-│       ├── middleware/   Security: rate limiting, validation, honeypot
-│       ├── config/       Database connection (pool)
-│       └── services/     Resend email service
+│       ├── components/
+│       ├── data/
+│       ├── hooks/
+│       ├── pages/
+│       ├── sections/
+│       ├── services/
+│       └── utils/
+│
+├── backend/
+│   └── src/
+│       ├── config/
+│       ├── controllers/
+│       ├── middleware/
+│       ├── routes/
+│       └── services/
 │
 └── database/
-    └── schema.sql     All MySQL table definitions
+    └── schema_postgres.sql
 ```
 
-## Local Development Setup
+## 🚀 Features
 
-### 1. Database (XAMPP)
-1. Start XAMPP, enable the MySQL module.
-2. Open phpMyAdmin (or any MySQL client) and run the contents of
-   `database/schema.sql`. This creates the `portfolio_db` database
-   and all required tables.
+### Portfolio
 
-### 2. Backend
-```bash
-cd backend
-npm install
-cp .env.example .env
-# Edit .env with your real MySQL credentials and Resend API key
-npm run dev
-```
-Server runs on `http://localhost:5000` by default.
+The public website includes:
 
-### 3. Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-App runs on `http://localhost:5173` by default.
+* Hero section
+* About
+* Skills
+* Experience
+* Platforms built
+* Projects
+* Education
+* Contact
+* Responsive navigation
+* Theme switching
 
-## Security Measures Implemented
+### Project Management
 
-- **Helmet.js** — sets protective HTTP headers
-- **CORS** — API only accepts requests from the configured frontend URL
-- **Rate limiting** — contact form capped at 5 submissions/IP/hour;
-  general API capped at 100 requests/IP/15 min
-- **Honeypot field** — invisible form field that traps bots
-- **Input validation & sanitization** — express-validator on all
-  contact form fields
-- **Parameterized SQL queries** — every database query uses `?`
-  placeholders, never raw string concatenation (prevents SQL injection)
-- **Environment variables** — all secrets (DB credentials, API keys)
-  live in `.env`, which is git-ignored and never committed
+Projects are managed through a protected admin dashboard.
 
-## Content Editing (No Code Required)
+The dashboard allows the administrator to:
 
-- **Skills, Experience, Platforms Built:** edit the files in
-  `frontend/src/data/` directly — `skills.js` and `experience.js`.
-- **Projects:** stored in the database `projects` table. An admin
-  panel (planned, not yet built) will let you add/edit/remove
-  projects through a simple UI instead of writing SQL by hand.
+* Add projects
+* Edit projects
+* Delete projects
+* Mark projects as featured
+* Control project display order
+* Manage project information stored in PostgreSQL
 
-## Status / Next Steps
+Changes made through the admin dashboard are reflected on the public
+portfolio without requiring a frontend redeployment.
 
-- [x] Project scaffolding (frontend + backend)
-- [x] Design system (Tailwind v4 theme tokens, glassmorphism utilities)
-- [x] Dark/light theme toggle
-- [x] Database schema
-- [x] Contact form backend (validation, rate limiting, honeypot, email)
-- [ ] Section components (Hero, About, Skills, Experience, Projects, Contact UI)
-- [ ] GitHub API integration for the Projects section
-- [ ] Admin panel for managing projects
-- [ ] SEO setup (meta tags, sitemap, structured data)
-- [ ] Deployment (Vercel for frontend, Render/Railway for backend, cloud MySQL)
+### Contact System
+
+The contact section supports professional inquiries such as:
+
+* Job opportunities
+* Collaborations
+* Freelance projects
+* General inquiries
+
+Submitted messages are processed by the backend and email notifications
+are sent to the configured recipient.
+
+Visitors also receive an acknowledgement email after successfully
+submitting an inquiry.
+
+## 🔐 Security
+
+The application includes several security measures, including:
+
+* Secure HTTP headers
+* CORS configuration
+* API rate limiting
+* Request validation
+* Bot protection
+* Parameterized database queries
+* Environment-based configuration
+* Password hashing
+* JWT-based administrator authentication
+* HttpOnly authentication cookies
+* Protected administrator API routes
+
+Sensitive credentials are kept outside the source code and are not included
+in the repository.
+
+## 📱 Responsive Design
+
+The interface is designed to work across:
+
+* Mobile devices
+* Tablets
+* Laptops
+* Desktop screens
+
+The application also considers accessibility, keyboard navigation,
+readable contrast, semantic HTML, and responsive interaction patterns.
+
+## 🌐 Live Website
+
+**Coming soon**
+
+## 📸 Preview
+
+Coming soon.
+
+## 👨‍💻 Author
+
+**Skand Ahuja**
+
+Data Analyst • Automation Engineer • Full-Stack Developer
+
+* GitHub: [@skand-ahuja](https://github.com/skand-ahuja)
+
+## 📄 License
+
+This project is a personal portfolio website.
+
+The source code is publicly available for reference, but the portfolio
+content, personal information, images, branding, and other original assets
+belong to the author.
