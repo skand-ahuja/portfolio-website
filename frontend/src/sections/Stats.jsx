@@ -39,14 +39,16 @@ function StatItem({ stat, index, isLast }) {
 
   return (
     <motion.article
-      {...fadeUp(index * 0.08)} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
-      className="group relative py-7 sm:px-6 sm:py-8 lg:px-8 transition-colors duration-300"
-      style={{ borderBottom: !isLast ? "1px solid var(--border)" : "none", background: hovered ? "color-mix(in srgb, var(--accent) 3%, transparent)" : "transparent" }}
-      ref={(el) => { if (el && window.innerWidth >= 640) { el.style.borderBottom = "none"; el.style.borderRight = isLast ? "none" : "1px solid var(--border)"; } }}
+      {...fadeUp(index * 0.08)} 
+      onMouseEnter={() => setHovered(true)} 
+      onMouseLeave={() => setHovered(false)}
+      className={`group relative px-5 py-8 sm:px-6 lg:px-8 transition-colors duration-300 border-[var(--border)] ${
+        isLast ? "" : "border-b sm:border-b-0 sm:border-r"
+      }`}
+      style={{ background: hovered ? "color-mix(in srgb, var(--accent) 3%, transparent)" : "transparent" }}
     >
       <div className="mb-5 flex items-start justify-between gap-4">
         <div className="flex items-baseline">
-          {/* 🍏 EASTER EGG: Solid text turns into a beautiful gradient on hover */}
           <span className={`text-5xl font-bold leading-none md:text-6xl transition-all duration-500 ${hovered ? "bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] bg-clip-text text-transparent" : "text-[var(--text-primary)]"}`} style={{ letterSpacing: "-0.06em" }}>
             <CountUp target={stat.value} />
           </span>
@@ -56,9 +58,9 @@ function StatItem({ stat, index, isLast }) {
           <FontAwesomeIcon icon={stat.icon} className="h-3.5 w-3.5" />
         </button>
       </div>
-      <h3 className="text-sm font-semibold sm:text-base text-[var(--text-primary)]" style={{ letterSpacing: "-0.01em" }}>{stat.label}</h3>
-      <p className="mt-2 max-w-[250px] text-xs leading-5 text-[var(--text-secondary)]">{stat.description}</p>
-      <span aria-hidden="true" className="font-mono absolute bottom-4 right-0 font-medium opacity-40 sm:bottom-5 sm:right-5 text-[9px] uppercase tracking-widest text-[var(--text-muted)]">{String(index + 1).padStart(2, "0")}</span>
+      <h3 className="text-[15px] font-semibold sm:text-base text-[var(--text-primary)]" style={{ letterSpacing: "-0.01em" }}>{stat.label}</h3>
+      <p className="mt-2 max-w-[250px] text-[13px] leading-relaxed text-[var(--text-secondary)]">{stat.description}</p>
+      <span aria-hidden="true" className="font-mono absolute bottom-4 right-5 font-medium opacity-40 text-[9px] uppercase tracking-widest text-[var(--text-muted)]">{String(index + 1).padStart(2, "0")}</span>
     </motion.article>
   );
 }

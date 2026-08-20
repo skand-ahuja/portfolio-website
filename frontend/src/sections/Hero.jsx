@@ -146,19 +146,19 @@ export default function Hero() {
             variants={{ show: { transition: { staggerChildren: 0.1 } } }}
           >
             {/* Availability Badge */}
-            <motion.div variants={fadeUpVariants} className="mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-md" style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--surface) 40%, transparent)" }}>
+            <motion.div variants={fadeUpVariants} className="mb-6 lg:mb-8 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-md" style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--surface) 40%, transparent)" }}>
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-success)] opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-success)]" />
               </span>
-              <span className="font-mono text-[10px] font-semibold uppercase tracking-widest" style={{ color: "var(--text-primary)" }}>
+              <span className="font-mono text-[9px] sm:text-[10px] font-semibold uppercase tracking-widest text-[var(--text-primary)]">
                 Available for Roles & Freelance
               </span>
             </motion.div>
 
-            {/* Premium Typography Headline */}
-            <motion.h1 variants={fadeUpVariants} className="mb-6 font-bold tracking-tight" style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", lineHeight: 1.05 }}>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-br from-gray-900 to-gray-500 dark:from-white dark:to-gray-400">
+            {/* Headline - Added lg:mb-8 for more breathing room */}
+            <motion.h1 variants={fadeUpVariants} className="mb-6 lg:mb-8 text-[2.5rem] sm:text-[3.5rem] lg:text-[5.5rem] font-bold leading-[1.05] tracking-tight">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-br from-[var(--text-primary)] to-[var(--text-muted)]">
                 I build data-driven
               </span>
               <span className="block text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-indigo-400 to-purple-500">
@@ -166,21 +166,24 @@ export default function Hero() {
               </span>
             </motion.h1>
 
-            {/* Subtext */}
-            <motion.p variants={fadeUpVariants} className="mb-8 max-w-lg text-[15px] leading-[1.8] sm:text-[17px]" style={{ color: "var(--text-secondary)" }}>
+            {/* Subtext - 🍏 FIXED: Changed mb-8 to mb-10 lg:mb-12 (Pushes buttons down), widened to max-w-xl, and increased line-height to 1.8 */}
+            <motion.p variants={fadeUpVariants} className="mb-10 lg:mb-12 max-w-xl text-[14px] sm:text-[16px] leading-[1.8] text-[var(--text-secondary)]">
               I turn fragmented workflows and raw data into robust full-stack solutions. Bridging engineering precision with modern software development to solve real operational bottlenecks.
             </motion.p>
 
-            {/* CTAs */}
-            <motion.div variants={fadeUpVariants} className="flex flex-wrap items-center gap-4">
-              <a href="#contact" className="group inline-flex h-12 items-center justify-center gap-2.5 rounded-full px-7 text-sm font-semibold transition-all duration-300 hover:scale-105" style={{ background: "var(--text-primary)", color: "var(--page-bg)", transform: "translateZ(0)", boxShadow: "0 10px 30px color-mix(in srgb, var(--text-primary) 20%, transparent)" }}>
+            {/* CTAs - Added lg:gap-5 for slightly more space between buttons on desktop */}
+            <motion.div variants={fadeUpVariants} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 lg:gap-5">
+              
+              <a href="#contact" className="group inline-flex w-full sm:w-auto h-12 items-center justify-center gap-2.5 rounded-full px-8 text-[15px] font-semibold transition-all duration-300 hover:scale-105" style={{ background: "var(--text-primary)", color: "var(--page-bg)", transform: "translateZ(0)", boxShadow: "0 10px 30px color-mix(in srgb, var(--text-primary) 20%, transparent)" }}>
                 Start a project
-                <FontAwesomeIcon icon={faArrowRight} className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1" />
+                <FontAwesomeIcon icon={faArrowRight} className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
-              <a href="#projects" className="inline-flex h-12 items-center justify-center rounded-full border px-7 text-sm font-semibold transition-all duration-300 hover:scale-105 hover:bg-white/5" style={{ borderColor: "var(--border)", background: "transparent", color: "var(--text-primary)", transform: "translateZ(0)" }}>
-                <FontAwesomeIcon icon={faCodeBranch} className="mr-2 h-3.5 w-3.5" style={{ color: "var(--text-muted)" }}/>
+              
+              <a href="#projects" className="inline-flex w-full sm:w-auto h-12 items-center justify-center rounded-full border px-8 text-[15px] font-semibold transition-all duration-300 hover:scale-105 hover:bg-white/5" style={{ borderColor: "var(--border)", background: "transparent", color: "var(--text-primary)", transform: "translateZ(0)" }}>
+                <FontAwesomeIcon icon={faCodeBranch} className="mr-2 h-4 w-4" style={{ color: "var(--text-muted)" }}/>
                 View architecture
               </a>
+              
             </motion.div>
           </motion.div>
 
