@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faAward, faCalendarDays, faGraduationCap, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
-const SHOW_EDUCATION_SECTION = true;
-const SHOW_EDUCATION         = true;
-const SHOW_CERTIFICATIONS    = true;
+const SHOW_EDUCATION_SECTION = false;
+const SHOW_EDUCATION         = false;
+const SHOW_CERTIFICATIONS    = false;
 
 const SECTION_CONFIG = { label: "Education & Credentials", heading: "Learning that supports", headingAccent: "the work.", subtext: "Formal education and certifications that complement hands-on experience." };
 const EDUCATION = [{ id: "edu-1", degree: "Your Degree", field: "Specialization", institution: "University", location: "City, State", startYear: "20XX", endYear: "20XX", description: "Short description of what you learned." }];
