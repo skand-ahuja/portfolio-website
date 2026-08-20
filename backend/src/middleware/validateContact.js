@@ -12,7 +12,7 @@ export const validateContactForm = [
   body("email").isString().withMessage("Email must be text.").bail().trim().notEmpty().withMessage("Email is required.").bail().isEmail().withMessage("Enter a valid email address.").bail().normalizeEmail(),
   body("inquiryType").isString().withMessage("Inquiry type must be text.").bail().trim().isIn(ALLOWED_INQUIRY_TYPES).withMessage("Invalid inquiry type."),
   body("company").optional({ checkFalsy: true }).isString().withMessage("Company must be text.").bail().trim().isLength({ max: 150 }).withMessage("Company name is too long."),
-  body("message").isString().withMessage("Message must be text.").bail().trim().notEmpty().withMessage("Message is required.").bail().isLength({ min: 20, max: 1000 }).withMessage("Message must be between 20 and 1000 characters."),
+  body("message").isString().withMessage("Message must be text.").bail().trim().notEmpty().withMessage("Message is required.").bail().isLength({ min: 2, max: 1000 }).withMessage("Message must be between 2 and 1000 characters."),
   body("website").optional({ checkFalsy: true }).isString().withMessage("Invalid request.").bail().trim().isLength({ max: 100 }).withMessage("Invalid request.")
 ];
 

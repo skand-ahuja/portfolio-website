@@ -1,32 +1,19 @@
-/**
- * App.jsx
- *
- * Root routing component for the portfolio.
- *
- * Routes:
- * /                  → Main portfolio
- * /admin             → Admin login
- * /admin/dashboard   → Admin dashboard
- * *                  → 404 page
- */
-
+// App.jsx - Fixed Routing, Page Order, and Global Theme Init
 import { Routes, Route } from "react-router-dom";
-
-/* Theme */
 import { useTheme } from "./hooks/useTheme";
 
 /* Global components */
 import Navbar from "./components/Navbar";
 import CustomCursor from "./components/CustomCursor";
 
-/* Portfolio sections */
+/* Portfolio sections (Exact Chronological Order) */
 import Hero from "./sections/Hero";
 import Stats from "./sections/Stats";
 import About from "./sections/About";
-import Skills from "./sections/Skills";
 import Experience from "./sections/Experience";
 import PlatformsBuilt from "./sections/PlatformsBuilt";
 import Projects from "./sections/Projects";
+import Skills from "./sections/Skills";
 import Education from "./sections/Education";
 import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
@@ -36,105 +23,44 @@ import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 
-/* ============================================================
-   MAIN PORTFOLIO
-   ============================================================ */
-
-/**
- * MainPortfolio
- *
- * Keeps the main portfolio page separate from the routing logic.
- * This makes App.jsx easier to maintain as the project grows.
- */
 function MainPortfolio() {
-  const {
-    theme,
-    toggleTheme,
-  } = useTheme();
-
   return (
     <>
-      {/* Custom cursor lives at the root level so it isn't
-          clipped by section-level overflow rules. */}
       <CustomCursor />
-
-      {/* Floating portfolio navigation */}
-      <Navbar
-        theme={theme}
-        toggleTheme={toggleTheme}
-      />
-
-      {/* Main portfolio content */}
+      <Navbar />
       <main>
         <Hero />
-
         <Stats />
-
         <About />
-
-        <Skills />
-
         <Experience />
-
         <PlatformsBuilt />
-
         <Projects />
-
+        <Skills />
         <Education />
-
         <Contact />
       </main>
-
-      {/* Portfolio footer */}
       <Footer />
     </>
   );
 }
 
-/* ============================================================
-   APP ROUTER
-   ============================================================ */
+export default function App() {
+  // 🍏 GLOBAL THEME INIT:
+  // Calls the hook so OS theme tracking runs on ALL routes 
+  // (including Admin and 404) without passing props down.
+  useTheme();
 
-function App() {
   return (
     <Routes>
-      {/* ======================================================
-          MAIN PORTFOLIO
-          ====================================================== */}
+      {/* MAIN PORTFOLIO */}
+      <Route path="/" element={<MainPortfolio />} />
 
-      <Route
-        path="/"
-        element={<MainPortfolio />}
-      />
+      {/* ADMIN ROUTES (Forced Dark Mode internally) */}
+      <Route path="/admin" element={<AdminLogin />} />
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-      {/* ======================================================
-          ADMIN LOGIN
-          ====================================================== */}
-
-      <Route
-        path="/admin"
-        element={<AdminLogin />}
-      />
-
-      {/* ======================================================
-          ADMIN DASHBOARD
-          ====================================================== */}
-
-      <Route
-        path="/admin/dashboard"
-        element={<AdminDashboard />}
-      />
-
-      {/* ======================================================
-          404
-          ====================================================== */}
-
-      <Route
-        path="*"
-        element={<NotFound />}
-      />
+      {/* 404 FALLBACK */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
-
-export default App;

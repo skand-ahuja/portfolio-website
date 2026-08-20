@@ -1,326 +1,85 @@
-/**
- * Footer.jsx
- *
- * Site footer with brand, navigation, social links and back-to-top.
- *
- * FUTURE-PROOFING GUIDE:
- * ──────────────────────
- * 1. To ADD a nav link    → add object to NAV_LINKS array
- * 2. To ADD a social link → add object to SOCIAL_LINKS array
- * 3. To CHANGE brand text → edit BRAND_CONFIG
- * 4. To CHANGE email      → edit SOCIAL_LINKS email href
- * 5. Glass card wraps the entire footer content — consistent with
- *    the glass system in index.css (Tier 2)
- *
- * Fixes applied:
- * 1. hover:text-accent, hover:bg-accent/10, hover:border-accent/30
- *    → onMouseEnter/Leave with CSS vars (Tailwind hover unreliable)
- * 2. border-current/10, bg-current/[0.03] → var(--border) + color-mix()
- * 3. text-primary/secondary/muted/accent → inline CSS var styles
- * 4. glass-card + duplicate border → removed extra border class
- * 5. Nav link hover → SocialIconLink component with useState
- * 6. Social icons → SocialIconLink with proper CSS var hover
- * 7. Back-to-top → BackToTop component with useState hover
- * 8. BRAND_CONFIG for easy brand text updates
- */
-
-import { useState } from "react";
+// Footer.jsx - With Live Time & Rocket Launch Easter Eggs
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { faArrowUp, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp, faEnvelope, faRocket } from "@fortawesome/free-solid-svg-icons";
 
-/* ============================================================
-   BRAND CONFIG
-   ============================================================ */
-const BRAND_CONFIG = {
-  name:     "SKAND",
-  tagline:  ["Engineering.", "Data.", "Software."],
-  subline:  "Building systems that solve real operational problems.",
-  logoHref: "#hero",
-};
+const BRAND_CONFIG = { name: "SKAND", tagline: ["Engineering.", "Data.", "Software."], subline: "Building systems that solve real operational problems.", logoHref: "#hero" };
+const NAV_LINKS = [{ label: "About", href: "#about" }, { label: "Experience", href: "#experience" }, { label: "Projects", href: "#projects" }, { label: "Skills", href: "#skills" }, { label: "Contact", href: "#contact" }];
+const SOCIAL_LINKS = [{ id: "linkedin", icon: faLinkedin, href: "https://linkedin.com/in/skand-ahuja", label: "LinkedIn" }, { id: "github", icon: faGithub, href: "https://github.com/skand-ahuja", label: "GitHub" }, { id: "email", icon: faEnvelope, href: "mailto:your@email.com", label: "Email" }];
+const fadeUp = (delay = 0) => ({ initial: { opacity: 0, y: 12 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.45, delay } });
 
-/* ============================================================
-   NAV LINKS
-   ============================================================ */
-const NAV_LINKS = [
-  { label: "About",      href: "#about"      },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects",   href: "#projects"   },
-  { label: "Skills",     href: "#skills"     },
-  { label: "Contact",    href: "#contact"    },
-  /* ── ADD MORE NAV LINKS HERE ──────────────────────────────
-  { label: "Blog",  href: "#blog"  },
-  ─────────────────────────────────────────────────────────── */
-];
-
-/* ============================================================
-   SOCIAL LINKS
-   id: "email" gets special treatment (no target="_blank")
-   ============================================================ */
-const SOCIAL_LINKS = [
-  {
-    id:    "linkedin",
-    icon:  faLinkedin,
-    href:  "https://linkedin.com/in/skand-ahuja",
-    label: "LinkedIn",
-  },
-  {
-    id:    "github",
-    icon:  faGithub,
-    href:  "https://github.com/skand-ahuja",
-    label: "GitHub",
-  },
-  {
-    id:    "email",
-    icon:  faEnvelope,
-    href:  "mailto:your@email.com",   /* ← Update this */
-    label: "Email",
-  },
-  /* ── ADD MORE SOCIAL LINKS HERE ───────────────────────────
-  {
-    id:    "twitter",
-    icon:  faXTwitter,   // import from free-brands-svg-icons
-    href:  "https://x.com/yourusername",
-    label: "X / Twitter",
-  },
-  ─────────────────────────────────────────────────────────── */
-];
-
-/* ============================================================
-   ANIMATION VARIANTS
-   ============================================================ */
-const fadeUp = (delay = 0) => ({
-  initial:     { opacity: 0, y: 12 },
-  whileInView: { opacity: 1, y: 0  },
-  viewport:    { once: true },
-  transition:  { duration: 0.45, delay },
-});
-
-/* ============================================================
-   NAV LINK ITEM
-   Hover managed via useState — reliable with CSS vars.
-   ============================================================ */
-function NavLinkItem({ link }) {
-  const [hovered, setHovered] = useState(false);
-
+// 🍏 EASTER EGG 1: Live Local Time Clock
+function LiveTime() {
+  const [time, setTime] = useState("");
+  useEffect(() => {
+    const update = () => setTime(new Date().toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit" }));
+    update();
+    const int = setInterval(update, 1000);
+    return () => clearInterval(int);
+  }, []);
   return (
-    <li>
-      <a
-        href={link.href}
-        className="text-sm transition-colors duration-200"
-        style={{ color: hovered ? "var(--accent)" : "var(--text-secondary)" }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
-        {link.label}
-      </a>
-    </li>
+    <div className="flex items-center gap-2 mt-4">
+      <span className="relative flex h-1.5 w-1.5"><span className="absolute h-full w-full animate-ping rounded-full bg-[var(--color-warning)] opacity-75" /><span className="relative h-1.5 w-1.5 rounded-full bg-[var(--color-warning)]" /></span>
+      <span className="font-mono text-[10px] uppercase tracking-widest text-[var(--text-muted)]">New Delhi: <span className="text-[var(--text-primary)] font-semibold">{time} IST</span></span>
+    </div>
   );
 }
 
-/* ============================================================
-   SOCIAL ICON BUTTON
-   Square icon button with hover lift + accent color.
-   ============================================================ */
-function SocialIconButton({ social }) {
+// 🍏 EASTER EGG 2: Rocket Launch Animation
+function BackToTopButton() {
   const [hovered, setHovered] = useState(false);
+  const [launching, setLaunching] = useState(false);
+
+  const handleClick = () => {
+    setLaunching(true);
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => setLaunching(false), 500); // Reset after landing
+    }, 400); // Wait for rocket to fly up before scrolling
+  };
 
   return (
-    <motion.a
-      href={social.href}
-      target={social.id === "email" ? undefined : "_blank"}
-      rel={social.id === "email" ? undefined : "noopener noreferrer"}
-      aria-label={social.label}
-      /* Framer Motion handles the lift */
-      whileTap={{ scale: 0.96 }}
-      animate={{ y: hovered ? -3 : 0 }}
-      transition={{ duration: 0.2 }}
-      className="flex h-11 w-11 items-center justify-center rounded-xl transition-all duration-300"
-      style={{
-        border:     "1px solid var(--border)",
-        background: hovered
-          ? "color-mix(in srgb, var(--accent) 10%, transparent)"
-          : "color-mix(in srgb, var(--surface-solid) 15%, transparent)",
-        color:      hovered ? "var(--accent)" : "var(--text-secondary)",
-        borderColor: hovered
-          ? "color-mix(in srgb, var(--accent) 30%, transparent)"
-          : "var(--border)",
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <FontAwesomeIcon icon={social.icon} className="h-4 w-4" />
-    </motion.a>
+    <button onClick={handleClick} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} className="mt-8 flex h-10 items-center justify-center gap-2.5 rounded-full border px-5 text-[11px] font-semibold uppercase tracking-widest transition-all duration-300" style={{ borderColor: hovered ? "color-mix(in srgb, var(--accent) 30%, transparent)" : "var(--border)", background: hovered ? "color-mix(in srgb, var(--accent) 10%, transparent)" : "transparent", color: hovered ? "var(--accent)" : "var(--text-secondary)" }}>
+      <motion.span animate={launching ? { y: -50, opacity: 0 } : { y: hovered ? -2 : 0, opacity: 1 }} transition={{ duration: launching ? 0.4 : 0.2 }}>
+        <FontAwesomeIcon icon={launching ? faRocket : faArrowUp} className="h-3 w-3" />
+      </motion.span>
+      Back to top
+    </button>
   );
 }
 
-/* ============================================================
-   BACK TO TOP BUTTON
-   ============================================================ */
-function BackToTopButton({ onClick }) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <motion.button
-      type="button"
-      onClick={onClick}
-      whileTap={{ scale: 0.96 }}
-      animate={{ y: hovered ? -3 : 0 }}
-      transition={{ duration: 0.2 }}
-      className="mt-8 inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm transition-all duration-300"
-      style={{
-        border:      "1px solid var(--border)",
-        background:  hovered
-          ? "color-mix(in srgb, var(--accent) 10%, transparent)"
-          : "transparent",
-        color:       hovered ? "var(--accent)" : "var(--text-secondary)",
-        borderColor: hovered
-          ? "color-mix(in srgb, var(--accent) 30%, transparent)"
-          : "var(--border)",
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <FontAwesomeIcon icon={faArrowUp} className="h-3 w-3" />
-      <span>Back to top</span>
-    </motion.button>
-  );
-}
-
-/* ============================================================
-   FOOTER — MAIN EXPORT
-   ============================================================ */
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
   return (
     <footer className="px-6 pb-8 md:px-12 md:pb-10">
       <div className="mx-auto max-w-6xl">
-
-        {/*
-          glass-card wraps the entire footer content.
-          No extra border class needed — glass-card already has
-          border: 1px solid var(--border-glass-accent)
-        */}
-        <div className="glass-card rounded-3xl p-8 md:p-10 lg:p-12">
-
-          {/* ── THREE COLUMN GRID ─────────────────────────── */}
+        <div className="glass-card rounded-[2rem] p-8 shadow-sm md:p-10 lg:p-12">
           <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
-
-            {/* ── BRAND COLUMN ────────────────────────────── */}
             <motion.div {...fadeUp(0)}>
-
-              {/* Logo */}
-              <a
-                href={BRAND_CONFIG.logoHref}
-                className="inline-flex items-center gap-2 text-2xl font-bold tracking-tight transition-colors duration-200"
-                style={{ color: "var(--text-primary)" }}
-              >
-                <span style={{ color: "var(--accent)" }}>&gt;</span>
-                {BRAND_CONFIG.name}
-              </a>
-
-              {/* Tagline */}
-              <p
-                className="mt-4 max-w-sm text-sm leading-7"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                {BRAND_CONFIG.tagline.map((line, i) => (
-                  <span key={i}>
-                    {line}
-                    {i < BRAND_CONFIG.tagline.length - 1 && <br />}
-                  </span>
-                ))}
-              </p>
-
-              {/* Subline */}
-              <p
-                className="mt-6 max-w-sm text-sm leading-7"
-                style={{ color: "var(--text-muted)" }}
-              >
-                {BRAND_CONFIG.subline}
-              </p>
+              <a href={BRAND_CONFIG.logoHref} className="font-mono text-2xl font-bold tracking-tighter text-[var(--text-primary)]"><span className="text-[var(--accent)]">&gt;</span>{BRAND_CONFIG.name}</a>
+              <p className="mt-4 max-w-sm text-[14px] leading-relaxed text-[var(--text-secondary)]">{BRAND_CONFIG.tagline.join(" ")}</p>
+              <p className="mt-4 max-w-sm text-[13px] leading-relaxed text-[var(--text-muted)]">{BRAND_CONFIG.subline}</p>
+              <LiveTime />
             </motion.div>
-
-            {/* ── NAVIGATION COLUMN ───────────────────────── */}
             <motion.div {...fadeUp(0.05)}>
-              <p
-                className="mb-5 font-mono-tag font-semibold uppercase"
-                style={{
-                  fontSize:      "0.625rem",
-                  letterSpacing: "0.16em",
-                  color:         "var(--accent)",
-                }}
-              >
-                Navigation
-              </p>
-
-              <nav aria-label="Footer navigation">
-                <ul className="space-y-3">
-                  {NAV_LINKS.map((link) => (
-                    <NavLinkItem key={link.href} link={link} />
-                  ))}
-                </ul>
-              </nav>
+              <p className="mb-5 font-mono text-[10px] font-semibold uppercase tracking-widest text-[var(--accent)]">Navigation</p>
+              <ul className="space-y-3">{NAV_LINKS.map((l) => <li key={l.href}><a href={l.href} className="text-[13.5px] font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--accent)]">{l.label}</a></li>)}</ul>
             </motion.div>
-
-            {/* ── CONNECT COLUMN ──────────────────────────── */}
             <motion.div {...fadeUp(0.10)}>
-              <p
-                className="mb-5 font-mono-tag font-semibold uppercase"
-                style={{
-                  fontSize:      "0.625rem",
-                  letterSpacing: "0.16em",
-                  color:         "var(--accent)",
-                }}
-              >
-                Connect
-              </p>
-
-              {/* Social icon buttons */}
+              <p className="mb-5 font-mono text-[10px] font-semibold uppercase tracking-widest text-[var(--accent)]">Connect</p>
               <div className="flex flex-wrap gap-3">
-                {SOCIAL_LINKS.map((social) => (
-                  <SocialIconButton key={social.id} social={social} />
+                {SOCIAL_LINKS.map((s) => (
+                  <motion.a key={s.id} href={s.href} target={s.id === "email" ? undefined : "_blank"} rel="noreferrer" whileTap={{ scale: 0.95 }} className="group flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface-solid)_20%,transparent)] text-[var(--text-secondary)] transition-all hover:-translate-y-1 hover:border-[color-mix(in_srgb,var(--accent)_30%,transparent)] hover:bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] hover:text-[var(--accent)]"><FontAwesomeIcon icon={s.icon} className="h-4 w-4" /></motion.a>
                 ))}
               </div>
-
-              {/* Back to top */}
-              <BackToTopButton onClick={scrollToTop} />
+              <BackToTopButton />
             </motion.div>
-
           </div>
-
-          {/* ── BOTTOM BAR ────────────────────────────────── */}
-          <div
-            className="mt-12 flex flex-col items-center justify-between gap-4 pt-6 sm:flex-row"
-            style={{ borderTop: "1px solid var(--border)" }}
-          >
-            {/* Copyright */}
-            <p
-              className="text-xs"
-              style={{ color: "var(--text-muted)" }}
-            >
-              © {currentYear} Skand Ahuja. All rights reserved.
-            </p>
-
-            {/* Built with */}
-            <p
-              className="text-center font-mono-tag uppercase"
-              style={{
-                fontSize:      "0.625rem",
-                letterSpacing: "0.14em",
-                color:         "var(--text-muted)",
-              }}
-            >
-              Built with React • Tailwind CSS • Framer Motion
-            </p>
+          <div className="mt-12 flex flex-col items-center justify-between border-t border-[var(--border)] pt-6 sm:flex-row">
+            <p className="text-[11px] text-[var(--text-muted)]">&copy; {new Date().getFullYear()} Skand Ahuja.</p>
+            <p className="font-mono text-[9px] uppercase tracking-widest text-[var(--text-muted)]">React &middot; Tailwind &middot; Motion</p>
           </div>
-
         </div>
       </div>
     </footer>

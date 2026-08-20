@@ -1,557 +1,226 @@
 /* ============================================================
-   PORTFOLIO — UNIFIED DESIGN SYSTEM
-   index.css — Single source of truth for ALL design tokens.
-   
-   ARCHITECTURE:
-   1. Google Fonts import
-   2. Tailwind v4 + dark variant
-   3. @theme  → Tailwind utility tokens (bg-accent, text-accent, etc.)
-   4. :root   → CSS custom properties — light mode
-   5. [data-theme="dark"] → dark mode overrides
-   6. Base reset
-   7. Typography utilities
-   8. Glass system
-   9. Button system
-   10. Form controls
-   11. Section layout
-   12. Miscellaneous utilities
-   13. Accessibility
+   PORTFOLIO — APPLE-INSPIRED PREMIUM DESIGN SYSTEM
+   index.css — Condensed, GPU-Accelerated, Minimalist
    ============================================================ */
 
-/* ============================================================
-   1. FONTS
-   ============================================================ */
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
-
+/* 1. FONTS (Inter as fallback for non-Apple devices, JetBrains for code) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
-/* ============================================================
-   2. TAILWIND V4 DARK MODE
-   Triggered by data-theme="dark" on <html> element.
-   useTheme.js sets this attribute — do not change the selector.
-   ============================================================ */
+/* 2. TAILWIND V4 DARK MODE (Triggered by data-theme="dark" from useTheme.js) */
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-/* ============================================================
-   3. @THEME — Tailwind utility tokens
-   These generate: bg-accent, text-accent, text-accent-soft,
-   font-heading, font-sans, font-mono as Tailwind classes.
-   
-   NOTE: Keep in sync with CSS vars below.
-   ============================================================ */
+/* 3. @THEME — Tailwind utility tokens mapping to CSS vars */
 @theme {
-  /* Brand palette */
-  --color-accent:       #6366f1;   /* indigo-500 */
-  --color-accent-hover: #4f46e5;   /* indigo-600 */
-  --color-accent-soft:  #818cf8;   /* indigo-400 */
-
-  /* Typography families */
-  --font-heading: "Space Grotesk", system-ui, sans-serif;
-  --font-sans:    "Inter",         system-ui, sans-serif;
-  --font-mono:    "JetBrains Mono", monospace;
+  --color-accent:       var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft:  var(--accent-soft);
+  /* Apple's Native Font Stack */
+  --font-heading:       -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+  --font-sans:          -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
+  --font-mono:          "JetBrains Mono", monospace;
 }
 
-/* ============================================================
-   4. CSS CUSTOM PROPERTIES — LIGHT MODE
-   
-   WHY SEPARATE FROM @theme?
-   @theme tokens work as Tailwind utility classes (bg-accent).
-   CSS vars work inside arbitrary values and non-Tailwind CSS.
-   Both are needed — they must stay in sync manually.
-   ============================================================ */
+html.theme-transitioning, html.theme-transitioning * {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease !important;
+}
+
+/* 4. CSS CUSTOM PROPERTIES — LIGHT MODE (Apple Premium Look) */
 :root {
   color-scheme: light;
+  
+  /* Backgrounds: Apple uses very subtle off-white for depth */
+  --page-bg:           #fbfbfd;
+  --page-bg-secondary: #f5f5f7;
 
-  /* --- Page backgrounds ---------------------------------- */
-  --page-bg:           #f5f4ff;
-  --page-bg-secondary: #eeedf8;
+  /* Surfaces: Highly translucent for that intense glass effect */
+  --surface:           rgba(255, 255, 255, 0.65);
+  --surface-hover:     rgba(255, 255, 255, 0.85);
+  --surface-solid:     #ffffff;
+  --surface-elevated:  #ffffff;
 
-  /* --- Surface layers (cards, panels, nav) --------------- */
-  --surface:        rgba(255, 255, 255, 0.72);
-  --surface-hover:  rgba(255, 255, 255, 0.90);
-  --surface-solid:  #ffffff;
+  /* Text: High contrast */
+  --text-primary:      #1d1d1f; 
+  --text-secondary:    #86868b;
+  --text-muted:        #a1a1a6;
 
-  /* --- Text hierarchy (4 levels — use these, not hardcoded colors) */
-  --text-primary:   #1a1a2e;   /* Headings, labels, important UI */
-  --text-secondary: #52526e;   /* Body copy, descriptions        */
-  --text-muted:     #73738c;   /* Captions, helper text, dates   */
-  --text-on-accent: #ffffff;   /* Text ON accent-colored surfaces */
+  /* Borders: Ultra-thin, barely visible */
+  --border:            rgba(0, 0, 0, 0.08);
+  --border-hover:      rgba(0, 0, 0, 0.16);
+  --border-strong:     rgba(0, 0, 0, 0.24);
+  --border-glass-accent: rgba(0, 0, 0, 0.05);
 
-  /* --- Borders ------------------------------------------ */
-  --border:        rgba(99, 102, 241, 0.12);
-  --border-hover:  rgba(99, 102, 241, 0.22);
-  --border-strong: rgba(99, 102, 241, 0.35);
+  /* Accent: Refined iOS-style Indigo/Blue */
+  --accent:            #4f46e5;
+  --accent-hover:      #4338ca;
+  --accent-soft:       #818cf8;
 
-  /* --- Accent (mirrors @theme for var() usage) ---------- */
-  --accent:       #6366f1;
-  --accent-hover: #4f46e5;
-  --accent-soft:  #818cf8;
-  --accent-bg:    rgba(99, 102, 241, 0.07);   /* subtle tinted bg */
+  /* Status Colors */
+  --color-success:     #34c759;
+  --color-warning:     #ff9f0a;
+  --color-error:       #ff3b30;
 
-  /* --- Status colors ------------------------------------- */
-  --color-success: #10b981;   /* emerald-500 */
-  --color-warning: #f59e0b;   /* amber-500   */
-  --color-error:   #ef4444;   /* red-500     */
+  /* Shadows: Softer, diffused Apple-style drop shadows */
+  --shadow-sm:         0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-card:       0 10px 30px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.02);
+  --shadow-nav:        0 8px 32px rgba(0, 0, 0, 0.06);
+  --shadow-lg:         0 20px 60px rgba(0, 0, 0, 0.08);
 
-  /* --- Shadows ------------------------------------------ */
-  --shadow-sm:   0 2px 8px  rgba(46, 45, 90, 0.05);
-  --shadow-card: 0 8px 32px rgba(46, 45, 90, 0.07),
-                 0 2px 8px  rgba(46, 45, 90, 0.04);
-  --shadow-nav:  0 8px 40px rgba(46, 45, 90, 0.10);
-  --shadow-lg:   0 24px 64px rgba(46, 45, 90, 0.10);
+  /* Typography Scale */
+  --text-label: 0.625rem; --text-caption: 0.6875rem; --text-sm: 0.875rem; --text-base: 1rem;
+  --text-lg: 1.125rem; --text-xl: 1.25rem; --text-2xl: 1.5rem; --text-4xl: 2.25rem; --text-5xl: 3rem;
 
-  /* --- Typography scale
-     Named by ROLE, not pixel size.
-     Use these in components instead of arbitrary px values.
-     Tailwind's own text-sm / text-lg etc. map to these values. */
-  --text-label:   0.625rem;    /* 10px — section labels, mono tags */
-  --text-caption: 0.6875rem;   /* 11px — timestamps, meta          */
-  --text-sm:      0.875rem;    /* 14px — body, form inputs         */
-  --text-base:    1rem;        /* 16px — comfortable reading       */
-  --text-lg:      1.125rem;    /* 18px — card headings             */
-  --text-xl:      1.25rem;     /* 20px — subsection headings       */
-  --text-2xl:     1.5rem;      /* 24px — section headings mobile   */
-  --text-4xl:     2.25rem;     /* 36px — section headings tablet   */
-  --text-5xl:     3rem;        /* 48px — section headings desktop  */
+  /* Layout Spacing */
+  --section-py: 5rem; --section-py-md: 7rem; --nav-height: 5rem;
 
-  /* --- Spacing rhythm ------------------------------------ */
-  --section-py:    5rem;     /* Section vertical padding base */
-  --section-py-md: 7rem;     /* Section vertical padding md+  */
-  --nav-height:    5rem;     /* Fixed navbar height for scroll-margin */
-
-  /* --- Transitions --------------------------------------- */
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out:    cubic-bezier(0.0, 0, 0.2, 1);
-  --duration-fast: 0.15s;
-  --duration-base: 0.25s;
-  --duration-slow: 0.40s;
+  /* Transitions */
+  --duration-fast: 0.15s; --duration-base: 0.25s; --duration-slow: 0.40s;
 }
 
-/* ============================================================
-   5. DARK MODE OVERRIDES
-   Only override tokens that actually change in dark mode.
-   Everything else inherits from :root.
-   ============================================================ */
+/* 5. DARK MODE OVERRIDES (True OLED Black for ultimate premium feel) */
 [data-theme="dark"] {
   color-scheme: dark;
+  --page-bg:           #000000;
+  --page-bg-secondary: #0a0a0a;
 
-  /* Backgrounds get much darker */
-  --page-bg:           #0d0d10;
-  --page-bg-secondary: #141418;
+  --surface:           rgba(28, 28, 30, 0.45);
+  --surface-hover:     rgba(44, 44, 46, 0.65);
+  --surface-solid:     #1c1c1e;
+  --surface-elevated:  #151515;
 
-  /* Surfaces become translucent dark */
-  --surface:        rgba(255, 255, 255, 0.045);
-  --surface-hover:  rgba(255, 255, 255, 0.075);
-  --surface-solid:  #151519;
+  --text-primary:      #f5f5f7;
+  --text-secondary:    #a1a1a6;
+  --text-muted:        #6e6e73;
 
-  /* Text lightens for contrast */
-  --text-primary:   #f4f4f6;
-  --text-secondary: #b5b5c3;
-  --text-muted:     #8b8b9d;
+  --border:            rgba(255, 255, 255, 0.12);
+  --border-hover:      rgba(255, 255, 255, 0.20);
+  --border-strong:     rgba(255, 255, 255, 0.30);
+  --border-glass-accent: rgba(255, 255, 255, 0.08);
 
-  /* Borders become white-based instead of accent-based */
-  --border:        rgba(255, 255, 255, 0.08);
-  --border-hover:  rgba(129, 140, 248, 0.22);
-  --border-strong: rgba(129, 140, 248, 0.38);
+  --accent:            #5e5ce6;
+  --accent-hover:      #7d7aff;
+  --accent-soft:       #7d7aff;
 
-  /* Accent shifts slightly lighter for dark bg contrast */
-  --accent:       #818cf8;   /* indigo-400 on dark */
-  --accent-hover: #a5b4fc;   /* indigo-300 on dark */
-  --accent-soft:  #a5b4fc;
-  --accent-bg:    rgba(129, 140, 248, 0.10);
-
-  /* Shadows deepen */
-  --shadow-sm:   0 2px 8px  rgba(0, 0, 0, 0.20);
-  --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.28);
-  --shadow-nav:  0 16px 50px rgba(0, 0, 0, 0.38);
-  --shadow-lg:   0 32px 80px rgba(0, 0, 0, 0.35);
+  --shadow-sm:         0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-card:       0 10px 30px rgba(0, 0, 0, 0.5);
+  --shadow-nav:        0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-lg:         0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
-/* ============================================================
-   6. BASE RESET
-   ============================================================ */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  background: var(--page-bg);
-  /* Prevent layout shift when scrollbar appears/disappears */
-  scrollbar-gutter: stable;
-}
-
+/* 6. BASE RESET & SMOOTHING */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; background: var(--page-bg); scrollbar-gutter: stable; }
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  overflow-x: hidden;
-  font-family: var(--font-sans);
-  /* Base font size — 15px comfortable reading, not the default 16px */
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  background: var(--page-bg);
-  color: var(--text-primary);
-  -webkit-font-smoothing:  antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0; min-width: 320px; min-height: 100vh; overflow-x: hidden;
+  font-family: var(--font-sans); font-size: 0.9375rem; line-height: 1.65;
+  background: var(--page-bg); color: var(--text-primary);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; /* Critical for Apple look */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-#root { min-height: 100vh; }
-main  { min-height: 100vh; }
-
-/* Headings — base styles only, size is set per-component */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  /* Do NOT set color here — inherits from body, changed per-section */
-  line-height: 1.1;
-  /* Do NOT set letter-spacing globally — causes overrides everywhere */
-  margin: 0;
-}
-
-/* 
-  IMPORTANT: Do NOT set `p { color: secondary }` globally.
-  That breaks hero text, card content, etc.
-  Each section controls its own p color via Tailwind classes.
-*/
-p   { margin: 0; }
-a   { color: inherit; text-decoration: none; }
+#root, main { min-height: 100vh; }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 700; line-height: 1.1; margin: 0; letter-spacing: -0.02em; }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
-
-button, input, textarea, select {
-  font: inherit;
-  color: inherit;
-}
-
-/* Remove tap highlight on mobile */
+button, input, textarea, select { font: inherit; color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
-
-/* Text selection */
 ::selection { background: var(--accent); color: #ffffff; }
 
-/* ============================================================
-   7. TYPOGRAPHY UTILITIES
-   
-   Consistent naming convention:
-   - .font-mono-tag → JetBrains Mono (labels, tags, code)
-   - .font-heading  → Space Grotesk (headings)
-   - .text-*        → semantic color classes using CSS vars
-   ============================================================ */
-
-/* Font family shortcuts */
-.font-mono-tag,
-.font-mono    { font-family: var(--font-mono); }
+/* 7. TYPOGRAPHY UTILITIES */
+.font-mono-tag, .font-mono { font-family: var(--font-mono); }
 .font-heading { font-family: var(--font-heading); }
-
-/* Semantic color classes */
-.text-primary   { color: var(--text-primary); }
+.text-primary { color: var(--text-primary); }
 .text-secondary { color: var(--text-secondary); }
-.text-muted     { color: var(--text-muted); }
+.text-muted { color: var(--text-muted); }
 
-/* ============================================================
-   8. GLASS SYSTEM
-   
-   Two tiers:
-   .glass-card     → for content cards, panels, modals
-   .glass-nav-pill → for the top navbar (tighter, more opaque)
-   ============================================================ */
-
+/* 8. PERFORMANCE-OPTIMIZED GLASS SYSTEM (Apple Safari style) */
 .glass-card {
-  background:               var(--surface);
-  border:                   1px solid var(--border);
-  backdrop-filter:          blur(18px);
-  -webkit-backdrop-filter:  blur(18px);
-  border-radius:            1rem;          /* 16px */
-  box-shadow:               var(--shadow-card);
-  transition:
-    background-color var(--duration-base) ease,
-    border-color     var(--duration-base) ease,
-    box-shadow       var(--duration-base) ease,
-    transform        var(--duration-base) ease;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem; /* 20px for smoother curves */
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: var(--shadow-card);
+  transform: translateZ(0); /* GPU Hardware Acceleration to prevent lag */
+  backface-visibility: hidden;
+  transition: background-color var(--duration-base) ease, border-color var(--duration-base) ease, box-shadow var(--duration-base) ease, transform var(--duration-base) ease;
 }
+.glass-card:hover { border-color: var(--border-hover); }
 
-/* Subtle border highlight on hover */
-.glass-card:hover {
-  border-color: var(--border-hover);
-}
-
-/* Nav pill — more opaque, stronger blur for readability over content */
 .glass-nav-pill {
-  background:              color-mix(in srgb, var(--surface-solid) 88%, transparent);
-  border:                  1px solid var(--border);
-  backdrop-filter:         blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow:              var(--shadow-nav);
-  transition:
-    background-color var(--duration-base) ease,
-    border-color     var(--duration-base) ease,
-    box-shadow       var(--duration-base) ease;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  box-shadow: var(--shadow-nav);
+  transform: translateZ(0);
+  transition: background-color var(--duration-base) ease, border-color var(--duration-base) ease, box-shadow var(--duration-base) ease;
+}
+[data-theme="dark"] .glass-nav-pill { border-color: var(--border-glass-accent); }
+
+.glass-modal {
+  background: color-mix(in srgb, var(--surface) 95%, transparent);
+  border-radius: 1.75rem; overflow: hidden;
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  transform: translateZ(0);
 }
 
-/* Dark mode: nav pill gets slightly stronger border */
-[data-theme="dark"] .glass-nav-pill {
-  border-color: var(--border-hover);
-}
-
-/* ============================================================
-   9. BUTTON SYSTEM
-   
-   .btn-primary   → filled accent (main CTA)
-   .btn-secondary → ghost with border
-   Both share the same size and shape.
-   ============================================================ */
-
-/* Shared foundation — do not use directly */
-%btn-base {
-  display:         inline-flex;
-  align-items:     center;
-  justify-content: center;
-  gap:             0.6rem;
-  /* 44px min height for WCAG 2.5.5 touch target */
-  min-height:      2.75rem;
-  padding:         0.6rem 1.375rem;
-  border-radius:   9999px;
-  font-size:       var(--text-sm);
-  font-weight:     600;
-  line-height:     1;
-  white-space:     nowrap;
-  cursor:          pointer;
-  transition:
-    transform    var(--duration-fast) ease,
-    background   var(--duration-fast) ease,
-    border-color var(--duration-fast) ease,
-    box-shadow   var(--duration-fast) ease,
-    color        var(--duration-fast) ease;
-}
-
+/* 9. BUTTON SYSTEM (Pill shaped, flat, high contrast) */
 .btn-primary {
-  display:         inline-flex;
-  align-items:     center;
-  justify-content: center;
-  gap:             0.6rem;
-  min-height:      2.75rem;
-  padding:         0.6rem 1.375rem;
-  border:          1px solid transparent;
-  border-radius:   9999px;
-  background:      var(--accent);
-  /* Always white — even in dark mode */
-  color:           #ffffff !important;
-  font-size:       var(--text-sm);
-  font-weight:     600;
-  line-height:     1;
-  cursor:          pointer;
-  box-shadow:      0 4px 16px color-mix(in srgb, var(--accent) 25%, transparent);
-  transition:
-    transform    0.2s ease,
-    background   0.2s ease,
-    box-shadow   0.2s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  min-height: 2.75rem; padding: 0.6rem 1.375rem;
+  border: none; border-radius: 9999px;
+  background: var(--text-primary); color: var(--page-bg) !important; /* Inverted contrast for primary action */
+  font-size: var(--text-sm); font-weight: 600; line-height: 1; cursor: pointer;
+  transform: translateZ(0);
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
-
-.btn-primary:hover {
-  transform:  translateY(-2px);
-  background: var(--accent-hover);
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 32%, transparent);
-}
-
-.btn-primary:active  { transform: translateY(0); }
-
-.btn-primary:disabled {
-  opacity:   0.55;
-  cursor:    not-allowed;
-  transform: none;
-}
+.btn-primary:hover { transform: translateY(-2px) scale(1.02); opacity: 0.9; }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+.btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
 .btn-secondary {
-  display:         inline-flex;
-  align-items:     center;
-  justify-content: center;
-  gap:             0.6rem;
-  min-height:      2.75rem;
-  padding:         0.6rem 1.375rem;
-  border:          1px solid var(--border);
-  border-radius:   9999px;
-  background:      color-mix(in srgb, var(--surface-solid) 30%, transparent);
-  color:           var(--text-primary);
-  font-size:       var(--text-sm);
-  font-weight:     600;
-  line-height:     1;
-  cursor:          pointer;
-  transition:
-    transform    0.2s ease,
-    border-color 0.2s ease,
-    background   0.2s ease,
-    color        0.2s ease;
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  min-height: 2.75rem; padding: 0.6rem 1.375rem;
+  border: 1px solid var(--border); border-radius: 9999px;
+  background: transparent; color: var(--text-primary);
+  font-size: var(--text-sm); font-weight: 600; line-height: 1; cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
+.btn-secondary:hover { transform: translateY(-2px); background: var(--surface-hover); border-color: var(--border-strong); }
 
-.btn-secondary:hover {
-  transform:    translateY(-2px);
-  border-color: var(--border-strong);
-  background:   color-mix(in srgb, var(--accent) 6%, transparent);
-  color:        var(--accent);
-}
-
-/* ============================================================
-   10. FORM CONTROLS
-   ============================================================ */
+/* 10. FORM CONTROLS */
 .form-control {
-  width:         100%;
-  /* 44px min height for WCAG touch target */
-  min-height:    2.75rem;
-  border-radius: 0.75rem;
-  border:        1px solid var(--border);
-  background:    color-mix(in srgb, var(--surface-solid) 40%, transparent);
-  color:         var(--text-primary);
-  padding:       0.7rem 1rem;
-  font-size:     var(--text-sm);
-  outline:       none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow   0.2s ease;
+  width: 100%; min-height: 2.75rem; border-radius: 0.75rem;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text-primary);
+  padding: 0.7rem 1rem; font-size: var(--text-sm); outline: none;
+  backdrop-filter: blur(12px); transform: translateZ(0);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-
-.form-control::placeholder {
-  color:   var(--text-muted);
-  opacity: 0.8;
-}
-
+.form-control::placeholder { color: var(--text-muted); opacity: 0.8; }
 .form-control:hover { border-color: var(--border-hover); }
+.form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent); }
+.form-control-error { border-color: var(--color-error) !important; }
+.form-control-error:focus { box-shadow: 0 0 0 3px rgba(255, 59, 48, 0.15) !important; }
 
-.form-control:focus {
-  border-color: var(--accent);
-  box-shadow:   0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
-}
+/* 11. LAYOUT & UTILS */
+.section-pad { padding-top: var(--section-py); padding-bottom: var(--section-py); }
+@media (min-width: 768px) { .section-pad { padding-top: var(--section-py-md); padding-bottom: var(--section-py-md); } }
+section[id] { scroll-margin-top: var(--nav-height); }
+.experience-skill { font-family: var(--font-mono); font-size: 0.625rem; font-weight: 500; color: var(--text-muted); transition: color 0.2s ease; }
+.experience-skill:hover { color: var(--text-primary); }
 
-/* Error state */
-.form-control-error {
-  border-color: var(--color-error) !important;
-}
-
-.form-control-error:focus {
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12) !important;
-}
-
-select.form-control option {
-  background: var(--surface-solid);
-  color:      var(--text-primary);
-}
-
-/* ============================================================
-   11. SECTION LAYOUT
-   ============================================================ */
-.section-pad {
-  padding-top:    var(--section-py);
-  padding-bottom: var(--section-py);
-}
-
-@media (min-width: 768px) {
-  .section-pad {
-    padding-top:    var(--section-py-md);
-    padding-bottom: var(--section-py-md);
-  }
-}
-
-/* 
-  scroll-margin-top ensures sections don't hide under fixed navbar
-  when navigating via anchor links. Must match navbar height.
-*/
-section[id] {
-  scroll-margin-top: var(--nav-height);
-}
-
-/* ============================================================
-   12. MISCELLANEOUS UTILITIES
-   ============================================================ */
-
-/* Skill tags in Experience section */
-.experience-skill {
-  font-family: var(--font-mono);
-  font-size:   0.625rem;    /* 10px */
-  font-weight: 500;
-  color:       var(--text-muted);
-  transition:  color 0.2s ease;
-}
-
-.experience-skill:hover { color: var(--accent); }
-
-/* Hero background grid fade */
-.hero-grid-mask {
-  -webkit-mask-image: linear-gradient(to bottom, black 10%, transparent 95%);
-          mask-image: linear-gradient(to bottom, black 10%, transparent 95%);
-}
-
-/* Scrolling ticker (skills strip) */
-@keyframes ticker-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-.ticker-track {
-  display:   flex;
-  width:     max-content;
-  animation: ticker-scroll 22s linear infinite;
-}
-
-.ticker-track:hover { animation-play-state: paused; }
-
-/* Custom scrollbar */
-::-webkit-scrollbar       { width: 6px; }
+/* Clean custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-  background:    var(--border-strong);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 9999px; border: 2px solid var(--page-bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+*:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-/* WCAG 2.1 focus ring — visible on keyboard nav */
-*:focus-visible {
-  outline:        2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius:  2px;
-}
-
-/* ============================================================
-   13. ACCESSIBILITY — REDUCED MOTION
-   Respects user OS preference. Disables all animations.
-   ============================================================ */
+/* 12. ACCESSIBILITY */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration:        0.01ms !important;
-    animation-iteration-count: 1      !important;
-    transition-duration:       0.01ms !important;
-    scroll-behavior:           auto   !important;
-  }
-
-  .ticker-track { animation: none; }
-}
-
-/* ── TIER 4: Modal / Overlay ────────────────────────────────
-   Used in: ProjectModal, any full-screen overlays.
-   Strongest blur — blocks content behind clearly.
-   overflow: hidden ensures rounded corners clip child images.
-   ──────────────────────────────────────────────────────────── */
-.glass-modal {
-  background:              color-mix(in srgb, var(--surface-solid) 85%, transparent);
-  border-radius:           1.75rem;   /* 28px — large, premium */
-  overflow:                hidden;    /* clips image to rounded corners */
-  box-shadow:
-    0 32px 80px rgba(0, 0, 0, 0.25),
-    0 0 0 1px var(--border-glass-accent);
-  backdrop-filter:         blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-glass-accent);
-  transition:
-    background-color var(--duration-base) ease,
-    border-color     var(--duration-base) ease;
-}
-
-[data-theme="dark"] .glass-modal {
-  background: color-mix(in srgb, var(--surface-solid) 80%, transparent);
-  box-shadow:
-    0 32px 80px rgba(0, 0, 0, 0.45),
-    0 0 0 1px var(--border-glass-accent);
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

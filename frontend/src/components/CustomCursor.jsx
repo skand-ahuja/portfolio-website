@@ -1,176 +1,34 @@
 import { useEffect, useRef, useState } from "react";
 
-const INTERACTIVE_SELECTOR = [
-  "a",
-  "button",
-  "select",
-  '[role="button"]',
-  '[tabindex="0"]',
-].join(",");
-
 export default function CustomCursor() {
   const cursorRef = useRef(null);
-  const positionRef = useRef({
-    x: -100,
-    y: -100,
-  });
-
-  const frameRef = useRef(null);
-
-  const [visible, setVisible] = useState(false);
+  const positionRef = useRef({ x: -100, y: -100 });
   const [hovering, setHovering] = useState(false);
 
   useEffect(() => {
-    const finePointer = window.matchMedia(
-      "(pointer: fine)"
-    );
-
-    if (!finePointer.matches) {
-      return;
-    }
-
+    if (!window.matchMedia("(pointer: fine)").matches) return;
     const cursor = cursorRef.current;
+    if (!cursor) return;
 
-    if (!cursor) {
-      return;
-    }
-
-    function updateCursor() {
-      cursor.style.transform =
-        `translate3d(${positionRef.current.x}px, ${positionRef.current.y}px, 0) translate(-50%, -50%)`;
-
-      frameRef.current =
-        requestAnimationFrame(updateCursor);
-    }
-
-    function handleMouseMove(event) {
-      positionRef.current = {
-        x: event.clientX,
-        y: event.clientY,
-      };
-
-      setVisible(true);
-    }
-
-    function handleMouseOver(event) {
-      if (
-        event.target.closest(INTERACTIVE_SELECTOR)
-      ) {
-        setHovering(true);
-      }
-    }
-
-    function handleMouseOut(event) {
-      if (
-        event.target.closest(INTERACTIVE_SELECTOR)
-      ) {
-        setHovering(false);
-      }
-    }
-
-    function handleMouseLeave() {
-      setVisible(false);
-    }
-
-    function handleMouseEnter() {
-      setVisible(true);
-    }
-
-    window.addEventListener(
-      "mousemove",
-      handleMouseMove
-    );
-
-    document.addEventListener(
-      "mouseover",
-      handleMouseOver
-    );
-
-    document.addEventListener(
-      "mouseout",
-      handleMouseOut
-    );
-
-    document.documentElement.addEventListener(
-      "mouseleave",
-      handleMouseLeave
-    );
-
-    document.documentElement.addEventListener(
-      "mouseenter",
-      handleMouseEnter
-    );
-
-    frameRef.current =
-      requestAnimationFrame(updateCursor);
-
-    return () => {
-      window.removeEventListener(
-        "mousemove",
-        handleMouseMove
-      );
-
-      document.removeEventListener(
-        "mouseover",
-        handleMouseOver
-      );
-
-      document.removeEventListener(
-        "mouseout",
-        handleMouseOut
-      );
-
-      document.documentElement.removeEventListener(
-        "mouseleave",
-        handleMouseLeave
-      );
-
-      document.documentElement.removeEventListener(
-        "mouseenter",
-        handleMouseEnter
-      );
-
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-      }
+    let raf;
+    const update = () => {
+      cursor.style.transform = `translate3d(${positionRef.current.x}px, ${positionRef.current.y}px, 0) translate(-50%, -50%)`;
+      raf = requestAnimationFrame(update);
     };
+
+    const move = (e) => { positionRef.current = { x: e.clientX, y: e.clientY }; cursor.style.opacity = 1; };
+    const over = (e) => { if (e.target.closest("a, button, input, select, textarea")) setHovering(true); };
+    const out = (e) => { if (e.target.closest("a, button, input, select, textarea")) setHovering(false); };
+
+    window.addEventListener("mousemove", move);
+    document.addEventListener("mouseover", over);
+    document.addEventListener("mouseout", out);
+    raf = requestAnimationFrame(update);
+
+    return () => { window.removeEventListener("mousemove", move); document.removeEventListener("mouseover", over); document.removeEventListener("mouseout", out); cancelAnimationFrame(raf); };
   }, []);
 
   return (
-    <div
-      ref={cursorRef}
-      aria-hidden="true"
-      className={`
-        pointer-events-none
-        fixed
-        left-0
-        top-0
-        z-[9999]
-        hidden
-        md:block
-        rounded-full
-        border
-        border-accent/60
-        bg-accent/15
-        backdrop-blur-[2px]
-        transition-[width,height,opacity,background-color]
-        duration-200
-
-        ${
-          hovering
-            ? "h-8 w-8 bg-accent/20"
-            : "h-3 w-3 bg-accent/60"
-        }
-
-        ${
-          visible
-            ? "opacity-100"
-            : "opacity-0"
-        }
-      `}
-      style={{
-        willChange: "transform",
-      }}
-    />
+    <div ref={cursorRef} className={`pointer-events-none fixed left-0 top-0 z-[9999] hidden md:block rounded-full border border-[var(--accent)] transition-[width,height,background-color] duration-200 ${hovering ? "h-10 w-10 bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]" : "h-3 w-3 bg-[var(--accent)]"}`} style={{ opacity: 0, willChange: "transform" }} />
   );
 }
