@@ -36,8 +36,17 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 pointer-events-none">
       <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="pointer-events-auto flex w-full max-w-5xl items-center justify-between rounded-full px-4 py-3 glass-nav-pill transition-all duration-400">
-        <button onClick={() => scrollToSection("hero")} className="font-mono text-[13px] font-bold uppercase tracking-widest text-[var(--text-primary)] transition-colors hover:text-[var(--accent)] outline-none">&gt; SA.</button>
-        
+        <button
+          onClick={() => scrollToSection("hero")}
+          aria-label="Go to homepage"
+          className="font-mono text-[13px] font-bold uppercase tracking-widest transition-all duration-200 hover:scale-105 outline-none"
+        >
+          {/* Purple terminal-style prompt */}
+          <span className="text-[var(--accent)]">&gt;</span>
+
+          {/* Gold personal monogram */}
+          <span className="text-[var(--brand-gold)]"> SA.</span>
+        </button>
         <nav className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((link) => {
             const isActive = isLinkActive(link.href);
