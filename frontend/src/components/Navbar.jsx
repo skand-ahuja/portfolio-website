@@ -35,7 +35,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 pointer-events-none">
-      <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className={`pointer-events-auto flex w-full max-w-5xl items-center justify-between rounded-full px-4 py-3 transition-all duration-400 ${isScrolled ? "glass-nav-pill" : "bg-transparent"}`}>
+      <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="pointer-events-auto flex w-full max-w-5xl items-center justify-between rounded-full px-4 py-3 glass-nav-pill transition-all duration-400">
         <button onClick={() => scrollToSection("hero")} className="font-mono text-[13px] font-bold uppercase tracking-widest text-[var(--text-primary)] transition-colors hover:text-[var(--accent)] outline-none">&gt; SA.</button>
         
         <nav className="hidden items-center gap-1 md:flex">
