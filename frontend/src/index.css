@@ -170,7 +170,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
     inset 0 1px 0 var(--border-glass-accent);
 
   /* GPU acceleration */
-  transform: translateZ(0);
+  /* transform: translateZ(0); */
 
   transition:
     background-color var(--duration-base) ease,
