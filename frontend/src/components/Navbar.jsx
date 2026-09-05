@@ -35,7 +35,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 pointer-events-none">
-      <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="pointer-events-auto flex w-full max-w-5xl items-center justify-between rounded-full px-4 py-3 glass-nav-pill transition-all duration-400">
+      <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="pointer-events-auto flex w-full max-w-5xl items-center justify-between rounded-full px-4 py-3 glass-nav-pill" style={{ transform: "translateZ(0)", willChange: "backdrop-filter", isolation: "isolate", }}>
         <button
           onClick={() => scrollToSection("hero")}
           aria-label="Go to homepage"
@@ -51,8 +51,9 @@ export default function Navbar() {
           {NAV_LINKS.map((link) => {
             const isActive = isLinkActive(link.href);
             return (
-              <button key={link.href} onClick={() => scrollToSection(link.href)} className="relative rounded-full px-4 py-1.5 text-[13px] font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)] outline-none">
-                {isActive && <motion.div layoutId="nav-pill" transition={{ type: "spring", stiffness: 400, damping: 30 }} className="absolute inset-0 rounded-full border border-[var(--border)] bg-[color-mix(in_srgb,var(--accent)_8%,transparent)]" />}
+              <button key={link.href} onClick={() => scrollToSection(link.href)} className="relative rounded-full px-4 py-1.5 text-[13px] font-medium outline-none transition-colors duration-200" style={{ color: "var(--text-secondary)" }}>
+                {isActive && <motion.div layoutId="nav-pill" transition={{ type: "spring", stiffness: 400, damping: 30 }} className="absolute inset-0 rounded-full"
+                  style={{ border: "1px solid var(--border)", background: "color-mix(in srgb, var(--accent) 8%, transparent)", }} />}
                 <span className="relative z-10" style={{ color: isActive ? "var(--text-primary)" : "inherit" }}>{link.label}</span>
               </button>
             );
@@ -68,9 +69,19 @@ export default function Navbar() {
 
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="pointer-events-auto absolute left-4 right-4 top-20 z-40 rounded-3xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface-solid)_80%,transparent)] p-4 shadow-2xl backdrop-blur-2xl md:hidden">
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="pointer-events-auto absolute left-4 right-4 top-20 z-40 rounded-3xl p-4 md:hidden"
+            style={{
+              border:              "1px solid var(--border)",
+              background:          "color-mix(in srgb, var(--surface-solid) 80%, transparent)",
+              boxShadow:           "var(--shadow-lg)",
+              backdropFilter:      "blur(24px) saturate(180%)",
+              WebkitBackdropFilter:"blur(24px) saturate(180%)",
+              transform:           "translateZ(0)",
+              willChange:          "backdrop-filter",
+            }}>
             <div className="flex flex-col gap-1">
-              {NAV_LINKS.map((l) => (<button key={l.href} onClick={() => scrollToSection(l.href)} className={`rounded-xl px-4 py-3 text-left text-sm font-medium ${isLinkActive(l.href) ? "bg-[var(--accent)] text-white" : "text-[var(--text-secondary)]"}`}>{l.label}</button>))}
+              {NAV_LINKS.map((l) => (<button key={l.href} onClick={() => scrollToSection(l.href)} className="rounded-xl px-4 py-3 text-left text-sm font-medium transition-colors duration-200"
+                style={{ background: isLinkActive(l.href) ? "var(--accent)" : "transparent", color: isLinkActive(l.href) ? "#ffffff" : "var(--text-secondary)", }}>{l.label}</button>))}
             </div>
           </motion.div>
         )}

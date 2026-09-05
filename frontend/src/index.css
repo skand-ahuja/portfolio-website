@@ -12,9 +12,9 @@
 
 /* 3. @THEME — Tailwind utility tokens mapping to CSS vars */
 @theme {
-  --color-accent:       var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-soft:  var(--accent-soft);
+  --color-accent:       #4f46e5;
+  --color-accent-hover: #4338ca;
+  --color-accent-soft:  #818cf8;
   /* Apple's Native Font Stack */
   --font-heading:       -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
   --font-sans:          -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", sans-serif;
@@ -54,7 +54,6 @@ html.theme-transitioning, html.theme-transitioning * {
   --accent:            #4f46e5;
   --accent-hover:      #4338ca;
   --accent-soft:       #818cf8;
-  --brand-gold:        #d4af37;
   --brand-gold:        #e0b94f;
 
   /* Status Colors */
@@ -139,12 +138,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .glass-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 1.25rem; /* 20px for smoother curves */
+  border-radius: 1.25rem;
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   box-shadow: var(--shadow-card);
-  transform: translateZ(0); /* GPU Hardware Acceleration to prevent lag */
+  transform: translateZ(0);
+  will-change: backdrop-filter;
   backface-visibility: hidden;
+  isolation: isolate;
   transition: background-color var(--duration-base) ease, border-color var(--duration-base) ease, box-shadow var(--duration-base) ease, transform var(--duration-base) ease;
 }
 .glass-card:hover { border-color: var(--border-hover); }
@@ -169,8 +170,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
     var(--shadow-nav),
     inset 0 1px 0 var(--border-glass-accent);
 
-  /* GPU acceleration */
-  /* transform: translateZ(0); */
+  /* GPU acceleration — REQUIRED for Vercel/production backdrop-filter */
+  transform: translateZ(0);
+  will-change: backdrop-filter;
 
   transition:
     background-color var(--duration-base) ease,
@@ -181,6 +183,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .glass-modal {
   background: color-mix(in srgb, var(--surface) 95%, transparent);
   border-radius: 1.75rem; overflow: hidden;
+  isolation: isolate;
   box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
   backdrop-filter: blur(40px) saturate(200%);
   -webkit-backdrop-filter: blur(40px) saturate(200%);

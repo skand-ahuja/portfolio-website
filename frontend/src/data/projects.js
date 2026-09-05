@@ -13,7 +13,7 @@ export const projects = [
     website_url: null,
     powerbi_url: null,
     is_confidential: false,
-    thumbnail: "/images/job-market.png", // Ensure this image exists in public/images/
+    thumbnail: "https://media.licdn.com/dms/image/v2/D5612AQHw3O5xiV2kwA/article-cover_image-shrink_720_1280/B56Zslf2izIYAI-/0/1765860669333?e=2147483647&v=beta&t=Bf-X3FrTupMjOBNzqc-yD84wTT9O_SUpRAcWK1RhQtM", // Ensure this image exists in public/images/
     featured: true,
   },
   {
@@ -29,7 +29,7 @@ export const projects = [
     live_url: null,
     powerbi_url: null,
     is_confidential: false,
-    thumbnail: "https://opengraph.githubassets.com/e3e3a3b76f553969d21f3dab8b52dd80d7a0471d8b6e6c47279cd24a37c1c85c/skand-ahuja/Coffee-Shop-Sales-Dashboard",
+    thumbnail: "https://d4l6e04z43qjx.cloudfront.net/img/retail/retail-logo-8.png",
     featured: true,
   },
   {
@@ -45,7 +45,7 @@ export const projects = [
     live_url: null,
     powerbi_url: null,
     is_confidential: false,
-    thumbnail: "https://opengraph.githubassets.com/1/skand-ahuja/Ola-Booking-Data-Analysis",
+    thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcRxvdyKUHRxz-MOChaDbpSuH_bfrNOH7s1pVHHQSv8CH5OINj2-BMuBkV&s=10",
     featured: true,
   },
 ];
