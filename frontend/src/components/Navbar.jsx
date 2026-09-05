@@ -35,7 +35,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4 pointer-events-none">
-      <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className="pointer-events-auto flex w-full max-w-5xl items-center justify-between rounded-full px-4 py-3 glass-nav-pill" style={{ transform: "translateZ(0)", willChange: "backdrop-filter", isolation: "isolate", }}>
+      <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} className={`pointer-events-auto flex w-full max-w-5xl items-center justify-between rounded-full px-4 py-3 glass-nav-pill ${isScrolled ? "is-scrolled" : ""}`} style={{ transform: "translateZ(0)", willChange: "backdrop-filter", isolation: "isolate", }}>
         <button
           onClick={() => scrollToSection("hero")}
           aria-label="Go to homepage"
