@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { faArrowUp, faEnvelope, faRocket } from "@fortawesome/free-solid-svg-icons";
 
-const BRAND_CONFIG = { name: "SKAND", tagline: ["Engineering.", "Data.", "Software."], subline: "Building systems that solve real operational problems.", logoHref: "#hero" };
+const BRAND_CONFIG = { name: "SKAND AHUJA", tagline: ["Engineering.", "Data.", "Software."], subline: "Building systems that solve real operational problems.", logoHref: "#hero" };
 const NAV_LINKS = [{ label: "About", href: "#about" }, { label: "Experience", href: "#experience" }, { label: "Projects", href: "#projects" }, { label: "Skills", href: "#skills" }, { label: "Contact", href: "#contact" }];
 const SOCIAL_LINKS = [{ id: "linkedin", icon: faLinkedin, href: "https://linkedin.com/in/skand-ahuja", label: "LinkedIn" }, { id: "github", icon: faGithub, href: "https://github.com/skand-ahuja", label: "GitHub" }, { id: "email", icon: faEnvelope, href: "mailto:your@email.com", label: "Email" }];
 const fadeUp = (delay = 0) => ({ initial: { opacity: 0, y: 12 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0.45, delay } });
