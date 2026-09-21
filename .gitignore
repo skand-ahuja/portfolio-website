@@ -8,6 +8,8 @@ node_modules/
 .pnp
 .pnp.js
 jspm_packages/
+.data/
+
 
 # --- 2. ENVIRONMENT VARIABLES & SECRETS (CRITICAL!) ---
 # NEVER commit your API keys, Resend keys, or Database passwords
