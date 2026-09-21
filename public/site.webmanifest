@@ -1,0 +1,16 @@
+{
+  "name": "Skand Ahuja Portfolio",
+  "short_name": "Skand",
+  "description": "Personal portfolio of Skand Ahuja showcasing engineering, data analytics and full-stack development projects.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0b0f",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}
