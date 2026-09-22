@@ -1,45 +1,45 @@
 import nodemailer from "nodemailer";
 
 const BRAND = {
-    name: "Skand Ahuja",
-    role: "Full-Stack Systems & Data Engineer",
+  name: "Skand Ahuja",
+  role: "Full-Stack Systems & Data Engineer",
 };
 
 const INQUIRY_LABELS: Record<string, string> = {
-    job_opportunity: "Job Opportunity",
-    collaboration: "Collaboration",
-    freelance: "Freelance Project",
-    general: "General Inquiry",
+  job_opportunity: "Job Opportunity",
+  collaboration: "Collaboration",
+  freelance: "Freelance Project",
+  general: "General Inquiry",
 };
 
 // Gmail SMTP Transporter
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_APP_PASSWORD,
-    },
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_APP_PASSWORD,
+  },
 });
 
 function escapeHtml(value: string | undefined | null) {
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 function formatMessage(value: string) {
-    return escapeHtml(value).replace(/\r?\n/g, "<br />");
+  return escapeHtml(value).replace(/\r?\n/g, "<br />");
 }
 
 // 🍏 EXACT RESTORED APPLE LIGHT/DARK RESPONSIVE TEMPLATE
 const generateEmailHtml = (
-    preheader: string,
-    title: string,
-    content: string,
-    cta: string = "",
+  preheader: string,
+  title: string,
+  content: string,
+  cta: string = "",
 ) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -100,25 +100,25 @@ const generateEmailHtml = (
 
 // 1. Send Inquiry to You
 export async function sendContactNotification({
-    name,
-    email,
-    inquiryType,
-    company,
-    message,
+  name,
+  email,
+  inquiryType,
+  company,
+  message,
 }: {
-    name: string;
-    email: string;
-    inquiryType: string;
-    company?: string;
-    message: string;
+  name: string;
+  email: string;
+  inquiryType: string;
+  company?: string;
+  message: string;
 }) {
-    const inquiryLabel = INQUIRY_LABELS[inquiryType] || "General Inquiry";
-    const safeName = escapeHtml(name);
-    const safeEmail = escapeHtml(email);
-    const safeCompany = company ? escapeHtml(company) : "Not provided";
-    const safeMessage = formatMessage(message);
+  const inquiryLabel = INQUIRY_LABELS[inquiryType] || "General Inquiry";
+  const safeName = escapeHtml(name);
+  const safeEmail = escapeHtml(email);
+  const safeCompany = company ? escapeHtml(company) : "Not provided";
+  const safeMessage = formatMessage(message);
 
-    const content = `
+  const content = `
     <p class="text-muted" style="margin-bottom: 24px;">Someone reached out through your portfolio.</p>
     <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 24px;">
       <tr><td width="30%" class="text-muted" style="padding: 8px 0; font-size: 14px;"><strong>Name</strong></td><td class="text-primary" style="padding: 8px 0; font-size: 14px;">${safeName}</td></tr>
@@ -131,35 +131,35 @@ export async function sendContactNotification({
     </div>
   `;
 
-    const cta = `<a href="mailto:${safeEmail}" style="display: inline-block; background-color: #6366f1; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 600; padding: 14px 28px; border-radius: 8px;">Reply to ${safeName}</a>`;
-    const text = `New message from ${name} (${email})\nReason: ${inquiryLabel}\nCompany: ${safeCompany}\n\nMessage:\n${message}`;
+  const cta = `<a href="mailto:${safeEmail}" style="display: inline-block; background-color: #6366f1; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 600; padding: 14px 28px; border-radius: 8px;">Reply to ${safeName}</a>`;
+  const text = `New message from ${name} (${email})\nReason: ${inquiryLabel}\nCompany: ${safeCompany}\n\nMessage:\n${message}`;
 
-    return transporter.sendMail({
-        from: `"${BRAND.name} Portfolio" <${process.env.EMAIL_USER}>`,
-        to: process.env.CONTACT_RECEIVER_EMAIL,
-        replyTo: email,
-        subject: `${inquiryLabel} · ${name}`,
-        text,
-        html: generateEmailHtml(
-            `New ${inquiryLabel.toLowerCase()} from ${safeName}`,
-            "New Message Received",
-            content,
-            cta,
-        ),
-        headers: { "X-Entity-Ref-ID": `portfolio-contact-${Date.now()}` },
-    });
+  return transporter.sendMail({
+    from: `"${BRAND.name} Portfolio" <${process.env.EMAIL_USER}>`,
+    to: process.env.CONTACT_RECEIVER_EMAIL,
+    replyTo: email,
+    subject: `${inquiryLabel} · ${name}`,
+    text,
+    html: generateEmailHtml(
+      `New ${inquiryLabel.toLowerCase()} from ${safeName}`,
+      "New Message Received",
+      content,
+      cta,
+    ),
+    headers: { "X-Entity-Ref-ID": `portfolio-contact-${Date.now()}` },
+  });
 }
 
 // 2. Send Automated Thank You Note to Visitor
 export async function sendAutoReply({
-    name,
-    email,
+  name,
+  email,
 }: {
-    name: string;
-    email: string;
+  name: string;
+  email: string;
 }) {
-    const safeName = escapeHtml(name);
-    const content = `
+  const safeName = escapeHtml(name);
+  const content = `
     <p class="text-primary" style="margin-bottom: 20px; font-size: 16px;">Hi ${safeName},</p>
     <p class="text-muted" style="margin-bottom: 24px; font-size: 16px;">Thanks for getting in touch through my portfolio. I've received your message and will get back to you within <strong>24 to 48 hours</strong>.</p>
     <div class="box" style="padding: 20px; border-radius: 12px; margin-bottom: 30px;">
@@ -169,18 +169,18 @@ export async function sendAutoReply({
     <p class="text-primary" style="margin: 0; font-size: 15px;">Best regards,<br><strong>${BRAND.name}</strong></p>
   `;
 
-    const text = `Hi ${name},\n\nThanks for reaching out! I will get back to you within 24-48 hours.\n\nBest,\n${BRAND.name}`;
+  const text = `Hi ${name},\n\nThanks for reaching out! I will get back to you within 24-48 hours.\n\nBest,\n${BRAND.name}`;
 
-    return transporter.sendMail({
-        from: `"${BRAND.name}" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: "Thanks for reaching out!",
-        text,
-        html: generateEmailHtml(
-            "Thanks for reaching out to Skand Ahuja.",
-            "Thanks for reaching out!",
-            content,
-        ),
-        headers: { "X-Entity-Ref-ID": `portfolio-auto-reply-${Date.now()}` },
-    });
+  return transporter.sendMail({
+    from: `"${BRAND.name}" <${process.env.EMAIL_USER}>`,
+    to: email,
+    subject: "Thanks for reaching out!",
+    text,
+    html: generateEmailHtml(
+      "Thanks for reaching out to Skand Ahuja.",
+      "Thanks for reaching out!",
+      content,
+    ),
+    headers: { "X-Entity-Ref-ID": `portfolio-auto-reply-${Date.now()}` },
+  });
 }

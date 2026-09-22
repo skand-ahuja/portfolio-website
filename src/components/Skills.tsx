@@ -6,17 +6,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCode, faDatabase, faGear, faChartColumn } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
-const SECTION_CONFIG = { 
-  label: "Skills & Tools", 
-  heading: "The tools behind", 
-  headingAccent: "the systems I build.", 
-  subtext: "Not just a list of technologies. Select a skill to see where I've actually used it." 
+const SECTION_CONFIG = {
+  label: "Skills & Tools",
+  heading: "The tools behind",
+  headingAccent: "the systems I build.",
+  subtext: "Not just a list of technologies. Select a skill to see where I've actually used it."
 };
 
-const fadeUp = (delay = 0) => ({ 
-  initial: { opacity: 0, y: 20 }, 
-  whileInView: { opacity: 1, y: 0 }, 
-  viewport: { once: true, margin: "-60px" }, 
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
   transition: { duration: 0.5, delay }
 });
 
@@ -35,17 +35,17 @@ function SkillLogo({ skill, isActive, isHovered }: { skill: SkillType; isActive:
   useEffect(() => setImageError(false), [skill.logo]);
 
   if (imageError) return <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] font-mono text-[9px] font-bold text-[var(--accent)]">{skill.name.substring(0, 2).toUpperCase()}</span>;
-  
+
   const showColor = isActive || isHovered;
-  
+
   return (
     /* eslint-disable-next-line @next/next/no-img-element */
-    <img 
-      src={skill.logo} 
-      alt={`${skill.name} logo`} 
-      onError={() => setImageError(true)} 
+    <img
+      src={skill.logo}
+      alt={`${skill.name} logo`}
+      onError={() => setImageError(true)}
       className="h-6 w-6 object-contain transition-all duration-300"
-      style={{ filter: showColor ? "grayscale(0) drop-shadow(0px 2px 4px rgba(255,255,255,0.1))" : "grayscale(100%) opacity(0.6)" }} 
+      style={{ filter: showColor ? "grayscale(0) drop-shadow(0px 2px 4px rgba(255,255,255,0.1))" : "grayscale(100%) opacity(0.6)" }}
     />
   );
 }
@@ -55,11 +55,11 @@ function SkillItem({ skill, isActive, onToggle }: { skill: SkillType; isActive: 
 
   return (
     <div className="relative" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      <button 
-        onClick={onToggle} 
-        className="group relative flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]" 
-        style={{ 
-          borderColor: isActive || isHovered ? "color-mix(in srgb, var(--accent) 30%, transparent)" : "var(--border)", 
+      <button
+        onClick={onToggle}
+        className="group relative flex w-full items-center gap-3 rounded-xl border px-3 py-3 text-left transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+        style={{
+          borderColor: isActive || isHovered ? "color-mix(in srgb, var(--accent) 30%, transparent)" : "var(--border)",
           background: isActive || isHovered ? "color-mix(in srgb, var(--accent) 4%, transparent)" : "color-mix(in srgb, var(--surface-solid) 15%, transparent)",
           transform: isHovered && !isActive ? "translateY(-2px)" : "none"
         }}
@@ -72,7 +72,7 @@ function SkillItem({ skill, isActive, onToggle }: { skill: SkillType; isActive: 
           <FontAwesomeIcon icon={faArrowRight} className="h-2.5 w-2.5 transition-transform duration-200" style={{ transform: isActive ? "rotate(90deg)" : "rotate(0deg)" }} />
         </span>
       </button>
-      
+
       <AnimatePresence>
         {isActive && skill.usedIn && (
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.22, ease: "easeOut" }} className="overflow-hidden">

@@ -5,20 +5,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faBriefcase, faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import { jobTimeline } from "@/data/experience";
 
-const SECTION_CONFIG = { 
-  label: "Experience", 
-  heading: "From engineering to", 
-  headingAccent: "data & systems.", 
-  subtext: "My professional journey across engineering, analytics, automation and software development.", 
-  ctaNote: "The common thread: solving practical problems with better systems.", 
+const SECTION_CONFIG = {
+  label: "Experience",
+  heading: "From engineering to",
+  headingAccent: "data & systems.",
+  subtext: "My professional journey across engineering, analytics, automation and software development.",
+  ctaNote: "The common thread: solving practical problems with better systems.",
   ctaLink: "#projects", // Modified slightly to match standard ID
-  ctaLinkLabel: "See what I built" 
+  ctaLinkLabel: "See what I built"
 };
 
-const fadeUp = (delay = 0) => ({ 
-  initial: { opacity: 0, y: 16 }, 
-  whileInView: { opacity: 1, y: 0 }, 
-  viewport: { once: true, margin: "-50px" }, 
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-50px" },
   show: { opacity: 1, y: 0, transition: { duration: 0.7 } },
 });
 
@@ -83,23 +83,23 @@ function ExperienceItem({ item, index, isLast }: { item: RoleType; index: number
 
 export default function Experience() {
   const roles: RoleType[] = [
-    { 
-      id: "current", 
-      role: jobTimeline.role, 
-      company: jobTimeline.company, 
-      duration: jobTimeline.duration, 
-      current: true, 
-      description: "Working across data analytics, reporting, automation and digital systems, with a focus on turning complex operational workflows into clearer and more useful solutions.", 
-      skills: ["Data Analytics", "Power BI", "Python", "Automation", "Development"] 
+    {
+      id: "current",
+      role: jobTimeline.role,
+      company: jobTimeline.company,
+      duration: jobTimeline.duration,
+      current: true,
+      description: "Working across data analytics, reporting, automation and digital systems, with a focus on turning complex operational workflows into clearer and more useful solutions.",
+      skills: ["Data Analytics", "Power BI", "Python", "Automation", "Development"]
     },
-    { 
-      id: "previous", 
-      role: jobTimeline.previousRole.title, 
-      company: jobTimeline.company, 
-      duration: jobTimeline.previousRole.duration, 
-      current: false, 
-      description: "Worked across electrical and electronics engineering projects before transitioning toward analytics, automation and software-driven problem solving.", 
-      skills: ["Electrical", "Electronics", "Engineering", "Projects"] 
+    {
+      id: "previous",
+      role: jobTimeline.previousRole.title,
+      company: jobTimeline.company,
+      duration: jobTimeline.previousRole.duration,
+      current: false,
+      description: "Worked across electrical and electronics engineering projects before transitioning toward analytics, automation and software-driven problem solving.",
+      skills: ["Electrical", "Electronics", "Engineering", "Projects"]
     }
   ];
 
@@ -116,11 +116,11 @@ export default function Experience() {
             <p className="max-w-sm text-[14px] leading-relaxed text-[var(--text-secondary)] md:text-right">{SECTION_CONFIG.subtext}</p>
           </div>
         </motion.div>
-        
+
         <div className="mx-auto max-w-5xl">
           {roles.map((item, index) => <ExperienceItem key={item.id} item={item} index={index} isLast={index === roles.length - 1} />)}
         </div>
-        
+
         <motion.div {...fadeUp(0)} className="mt-14 md:ml-[218px]">
           <div className="glass-card flex flex-col items-center justify-between gap-4 rounded-2xl p-5 sm:flex-row">
             <div className="flex items-center gap-4">
@@ -130,7 +130,7 @@ export default function Experience() {
               <p className="max-w-lg text-[13px] leading-relaxed text-[var(--text-secondary)]">{SECTION_CONFIG.ctaNote}</p>
             </div>
             <a href={SECTION_CONFIG.ctaLink} className="group flex shrink-0 items-center gap-2 font-mono text-[10px] font-semibold uppercase tracking-widest text-[var(--accent)]">
-              {SECTION_CONFIG.ctaLinkLabel} 
+              {SECTION_CONFIG.ctaLinkLabel}
               <FontAwesomeIcon icon={faArrowRight} className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-1" />
             </a>
           </div>

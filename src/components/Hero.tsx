@@ -173,8 +173,8 @@ export default function Hero() {
 
             {/* Subtext */}
             <motion.p variants={fadeUpVariants} className="mb-8 lg:mb-10 max-w-xl text-[14px] sm:text-[16px] leading-[1.8] text-[var(--text-secondary)]">
-  I turn fragmented workflows and raw data into robust full-stack solutions. Bridging engineering precision with modern software development to solve real operational bottlenecks.
-</motion.p>
+              I turn fragmented workflows and raw data into robust full-stack solutions. Bridging engineering precision with modern software development to solve real operational bottlenecks.
+            </motion.p>
 
             {/* CTAs */}
             <motion.div variants={fadeUpVariants} className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 lg:gap-5">

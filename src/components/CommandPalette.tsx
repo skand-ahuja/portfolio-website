@@ -208,8 +208,8 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                                             onClick={() => cmd.action()}
                                             onMouseEnter={() => setSelectedIndex(i)}
                                             className={`flex w-full items-center justify-between rounded-xl px-3.5 py-2.5 text-left transition-colors duration-150 ${isSelected
-                                                    ? "bg-[color-mix(in_srgb,var(--accent)_12%,transparent)]"
-                                                    : "hover:bg-[color-mix(in_srgb,var(--surface-solid)_40%,transparent)]"
+                                                ? "bg-[color-mix(in_srgb,var(--accent)_12%,transparent)]"
+                                                : "hover:bg-[color-mix(in_srgb,var(--surface-solid)_40%,transparent)]"
                                                 }`}
                                         >
                                             <div className="flex items-center gap-3 min-w-0">

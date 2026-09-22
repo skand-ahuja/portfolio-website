@@ -106,7 +106,7 @@ export default function Navbar({ onOpenPalette }: NavbarProps) {
                         onClick={() => onOpenPalette && onOpenPalette()}
                         title="Open Command Palette (⌘K / Ctrl+K)"
                         aria-label="Search and Commands"
-                        className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-solid)] text-[var(--text-secondary)] transition-all hover:border-[var(--accent)] hover:text-[var(--accent)] hover:scale-105 outline-none"
+                        className="hidden md:flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-solid)] text-[var(--text-secondary)] transition-all hover:border-[var(--accent)] hover:text-[var(--accent)] hover:scale-105 outline-none"
                     >
                         <FontAwesomeIcon icon={faTerminal} className="text-[12px]" />
                     </button>
