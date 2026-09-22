@@ -10,7 +10,11 @@ import { faArrowRight, faArrowDown, faDatabase, faChartLine, faCodeBranch } from
    ============================================================ */
 const fadeUpVariants = {
   hidden: { opacity: 0, y: 24 },
-  
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7 }
+  },
 };
 
 /* ============================================================
@@ -48,9 +52,9 @@ function SystemVisual() {
           <p className="pl-4">database: <span style={{ color: "#34d399" }}>&apos;PostgreSQL&apos;</span>,</p>
           <p className="pl-4">analytics: <span style={{ color: "#34d399" }}>&apos;Power BI&apos;</span></p>
           <p>&#125;);</p>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 0] }} transition={{ duration: 1.5, repeat: Infinity }}
-            className="mt-3 inline-block h-3.5 w-2" style={{ background: "var(--accent)" }} 
+            className="mt-3 inline-block h-3.5 w-2" style={{ background: "var(--accent)" }}
           />
         </div>
       </motion.div>
@@ -71,10 +75,10 @@ function SystemVisual() {
         </div>
         <div className="flex items-end gap-1.5 pt-2">
           {[40, 70, 45, 90, 65, 100].map((height, i) => (
-            <motion.div 
-              key={i} 
+            <motion.div
+              key={i}
               initial={{ height: 0 }} animate={{ height: `${height}%` }} transition={{ duration: 1, delay: 0.8 + (i * 0.1) }}
-              className="w-full rounded-t-sm" style={{ background: i === 5 ? "var(--accent)" : "color-mix(in srgb, var(--accent) 20%, transparent)", minHeight: "4px" }} 
+              className="w-full rounded-t-sm" style={{ background: i === 5 ? "var(--accent)" : "color-mix(in srgb, var(--accent) 20%, transparent)", minHeight: "4px" }}
             />
           ))}
         </div>
@@ -101,7 +105,7 @@ function SystemVisual() {
 
 export default function Hero() {
   const containerRef = useRef<HTMLElement>(null);
-  
+
   // Spotlight
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -120,7 +124,7 @@ export default function Hero() {
       id="hero"
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative flex min-h-[100svh] items-center overflow-hidden px-6 pb-20 pt-32 md:px-12 md:pt-40"
+      className="relative flex min-h-[100svh] items-center overflow-hidden px-6 pb-24 pt-24 md:px-12 md:pt-28 lg:pt-32"
     >
       {/* 1. BACKGROUND */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
@@ -139,7 +143,7 @@ export default function Hero() {
       {/* 2. MAIN CONTENT (Grid Layout: Text Left, System Visual Right) */}
       <div className="relative z-10 mx-auto w-full max-w-7xl">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8">
-          
+
           {/* LEFT: THE PITCH */}
           <motion.div
             initial="hidden"
@@ -147,7 +151,7 @@ export default function Hero() {
             variants={{ show: { transition: { staggerChildren: 0.1 } } }}
           >
             {/* Availability Badge */}
-            <motion.div variants={fadeUpVariants} className="mb-6 lg:mb-8 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-md" style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--surface) 40%, transparent)" }}>
+            <motion.div variants={fadeUpVariants} className="mb-4 lg:mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 backdrop-blur-md" style={{ borderColor: "var(--border)", background: "color-mix(in srgb, var(--surface) 40%, transparent)" }}>
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-success)] opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-success)]" />
@@ -158,7 +162,7 @@ export default function Hero() {
             </motion.div>
 
             {/* Headline */}
-            <motion.h1 variants={fadeUpVariants} className="mb-6 lg:mb-8 text-[2.5rem] sm:text-[3.5rem] lg:text-[5.5rem] font-bold leading-[1.05] tracking-tight">
+            <motion.h1 variants={fadeUpVariants} className="mb-5 lg:mb-6 text-[2.5rem] sm:text-[3.5rem] lg:text-[5.25rem] font-bold leading-[1.05] tracking-tight">
               <span className="block text-transparent bg-clip-text bg-gradient-to-br from-[var(--text-primary)] to-[var(--text-muted)]">
                 I build data-driven
               </span>
@@ -168,19 +172,19 @@ export default function Hero() {
             </motion.h1>
 
             {/* Subtext */}
-            <motion.p variants={fadeUpVariants} className="mb-10 lg:mb-12 max-w-xl text-[14px] sm:text-[16px] leading-[1.8] text-[var(--text-secondary)]">
-              I turn fragmented workflows and raw data into robust full-stack solutions. Bridging engineering precision with modern software development to solve real operational bottlenecks.
-            </motion.p>
+            <motion.p variants={fadeUpVariants} className="mb-8 lg:mb-10 max-w-xl text-[14px] sm:text-[16px] leading-[1.8] text-[var(--text-secondary)]">
+  I turn fragmented workflows and raw data into robust full-stack solutions. Bridging engineering precision with modern software development to solve real operational bottlenecks.
+</motion.p>
 
             {/* CTAs */}
-            <motion.div variants={fadeUpVariants} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 lg:gap-5">
+            <motion.div variants={fadeUpVariants} className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 lg:gap-5">
               <a href="#contact" className="group inline-flex w-full sm:w-auto h-12 items-center justify-center gap-2.5 rounded-full px-8 text-[15px] font-semibold transition-all duration-300 hover:scale-105" style={{ background: "var(--text-primary)", color: "var(--page-bg)", transform: "translateZ(0)", boxShadow: "0 10px 30px color-mix(in srgb, var(--text-primary) 20%, transparent)" }}>
                 Start a project
                 <FontAwesomeIcon icon={faArrowRight} className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
-              
+
               <a href="#projects" className="inline-flex w-full sm:w-auto h-12 items-center justify-center rounded-full border px-8 text-[15px] font-semibold transition-all duration-300 hover:scale-105 hover:bg-white/5" style={{ borderColor: "var(--border)", background: "transparent", color: "var(--text-primary)", transform: "translateZ(0)" }}>
-                <FontAwesomeIcon icon={faCodeBranch} className="mr-2 h-4 w-4" style={{ color: "var(--text-muted)" }}/>
+                <FontAwesomeIcon icon={faCodeBranch} className="mr-2 h-4 w-4" style={{ color: "var(--text-muted)" }} />
                 View architecture
               </a>
             </motion.div>
@@ -194,8 +198,8 @@ export default function Hero() {
       </div>
 
       {/* 3. BOTTOM TECH STRIP (Scroll Indicator) */}
-      <motion.div 
-        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.0 }} 
+      <motion.div
+        initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 1.0 }}
         className="absolute bottom-6 left-1/2 z-20 hidden w-[calc(100%-3rem)] max-w-7xl -translate-x-1/2 md:block"
       >
         <div className="flex items-center justify-between pt-5" style={{ borderTop: "1px solid var(--border)" }}>
