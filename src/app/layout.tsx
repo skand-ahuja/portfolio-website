@@ -5,6 +5,7 @@ import CustomCursor from "@/components/CustomCursor";
 
 // 🍏 SEO Metadata mapping from your old index.html
 export const metadata: Metadata = {
+  metadataBase: new URL("https://skand-ahuja.vercel.app"),
   title: "Skand Ahuja | Full-Stack Developer & Data Analyst",
   description: "Portfolio of Skand Ahuja showcasing React applications, Node.js projects, Python automation, Power BI dashboards, and full-stack web development.",
   keywords: ["Skand Ahuja", "Full Stack Developer", "React Developer", "Node.js", "Python", "Power BI", "SQL", "Portfolio", "Data Analyst"],

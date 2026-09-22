@@ -174,7 +174,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                         initial={{ opacity: 0, scale: 0.96, y: -16 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.96, y: -16 }}
-                        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
                         className="relative w-full max-w-xl overflow-hidden rounded-2xl border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface-solid)_85%,transparent)] shadow-[0_24px_80px_rgba(0,0,0,0.5)] backdrop-blur-2xl"
                     >
                         {/* Search Input Bar */}

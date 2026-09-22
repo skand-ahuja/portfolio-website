@@ -33,7 +33,7 @@ const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 16 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: "-60px" },
-    transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const }
+    transition: { duration: 0.5, delay }
 });
 
 function CountUp({ target, duration = 1400 }: { target: number; duration?: number }) {

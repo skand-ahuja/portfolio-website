@@ -10,7 +10,7 @@ import { faArrowRight, faArrowDown, faDatabase, faChartLine, faCodeBranch } from
    ============================================================ */
 const fadeUpVariants = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] as const } },
+  
 };
 
 /* ============================================================
@@ -26,7 +26,7 @@ function SystemVisual() {
       <motion.div
         initial={{ opacity: 0, y: 40, rotateX: 10, rotateY: -10 }}
         animate={{ opacity: 1, y: 0, rotateX: 0, rotateY: 0 }}
-        transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
         className="glass-card absolute left-0 top-[10%] w-[85%] overflow-hidden p-0 shadow-2xl backdrop-blur-2xl"
         style={{ transformPerspective: 1000 }}
       >
@@ -59,7 +59,7 @@ function SystemVisual() {
       <motion.div
         initial={{ opacity: 0, x: 40 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
         className="glass-card absolute bottom-[15%] right-0 flex w-[60%] flex-col gap-3 p-4 shadow-xl"
       >
         <div className="flex items-center justify-between">
@@ -84,7 +84,7 @@ function SystemVisual() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
         className="glass-card absolute -right-[5%] top-[25%] flex items-center gap-3 rounded-full p-3 pr-5 shadow-lg"
       >
         <div className="flex h-8 w-8 items-center justify-center rounded-full" style={{ background: "color-mix(in srgb, var(--color-success) 15%, transparent)" }}>

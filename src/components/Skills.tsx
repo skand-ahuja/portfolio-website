@@ -17,7 +17,7 @@ const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 20 }, 
   whileInView: { opacity: 1, y: 0 }, 
   viewport: { once: true, margin: "-60px" }, 
-  transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const }
+  transition: { duration: 0.5, delay }
 });
 
 type SkillType = { name: string; logo: string; usedIn: string };
@@ -75,7 +75,7 @@ function SkillItem({ skill, isActive, onToggle }: { skill: SkillType; isActive: 
       
       <AnimatePresence>
         {isActive && skill.usedIn && (
-          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden">
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.22, ease: "easeOut" }} className="overflow-hidden">
             <div className="ml-3 pb-1 pl-4 pt-3" style={{ borderLeft: "1px solid color-mix(in srgb, var(--accent) 25%, transparent)" }}>
               <span className="font-mono text-[9px] font-semibold uppercase tracking-widest text-[var(--accent)]">Used in</span>
               <p className="mt-1 text-[11px] leading-5 text-[var(--text-secondary)]">{skill.usedIn}</p>

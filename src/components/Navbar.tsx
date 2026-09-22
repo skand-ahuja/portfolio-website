@@ -53,7 +53,7 @@ export default function Navbar({ onOpenPalette }: NavbarProps) {
             <motion.div
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
                 className={`pointer-events-auto flex w-full max-w-5xl items-center justify-between rounded-full px-4 py-3 glass-nav-pill ${isScrolled ? "is-scrolled" : ""}`}
                 style={{ transform: "translateZ(0)", willChange: "backdrop-filter", isolation: "isolate" }}
             >

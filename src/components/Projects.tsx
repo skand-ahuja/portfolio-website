@@ -41,7 +41,7 @@ const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 16 },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: "-60px" },
-    transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const }
+    transition: { duration: 0.5, delay }
 });
 
 function ProjectImage({ project, className = "" }: any) {
@@ -215,7 +215,7 @@ function ProjectModal({ project, onClose }: any) {
         >
             <motion.div
                 initial={{ opacity: 0, y: 28, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 20, scale: 0.97 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
                 className="glass-modal relative my-auto w-full max-w-4xl overflow-hidden p-0 shadow-2xl bg-[var(--page-bg)]"
             >
                 <button

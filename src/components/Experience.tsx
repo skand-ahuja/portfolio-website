@@ -19,7 +19,7 @@ const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 16 }, 
   whileInView: { opacity: 1, y: 0 }, 
   viewport: { once: true, margin: "-50px" }, 
-  transition: { duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] as const }
+  show: { opacity: 1, y: 0, transition: { duration: 0.7 } },
 });
 
 // TRUE HEARTBEAT EFFECT
